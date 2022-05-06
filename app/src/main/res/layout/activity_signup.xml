@@ -14,6 +14,7 @@
             android:id="@+id/signup_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLength="10"
             android:layout_marginTop="25dp"
             android:text="회원가입"
             android:textColor="@color/black"
@@ -37,7 +38,7 @@
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:background="@color/lightgray"
             android:layout_marginTop="25dp"
             app:layout_constraintTop_toBottomOf="@+id/signup_title_tv" />
 
@@ -55,16 +56,29 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
+            android:id="@+id/signup_email_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="올바르지 않은 이메일 양식입니다."
+            android:textColor="@color/red"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/signup_email_tv"
+            app:layout_constraintStart_toEndOf="@id/signup_email_tv"
+            app:layout_constraintTop_toTopOf="@id/signup_email_tv" />
+
+        <TextView
             android:id="@+id/signup_codesend"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
+            android:paddingVertical="8dp"
             android:paddingHorizontal="17dp"
             android:layout_marginEnd="35dp"
             android:text="인증코드 전송"
             android:textSize="12sp"
             android:textColor="@color/white"
-            android:background="@drawable/darkgreen_solid_box_10dp"
+            android:background="@drawable/sub1_solid_box_10dp"
             app:layout_constraintTop_toTopOf="@id/signup_email_tv"
             app:layout_constraintBottom_toBottomOf="@id/signup_email_tv"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -74,8 +88,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:textSize="14sp"
+            android:hint="입력해주세요."
             android:layout_marginHorizontal="35dp"
-            android:background="@drawable/white_solid_green_stroke_box_10dp"
+            android:background="@drawable/white_solid_sub1_stroke_box_10dp"
             android:padding="13dp"
             android:layout_marginTop="9dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,11 +106,10 @@
             android:textSize="14sp"
             android:textColor="@color/black"
             android:layout_marginStart="35dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="7dp"
-            android:paddingVertical="13dp"
-            android:paddingStart="17dp"
-            android:background="@drawable/white_solid_green_stroke_box_10dp"
+            android:padding="13dp"
+            android:background="@drawable/white_solid_sub1_stroke_box_10dp"
             app:layout_constraintEnd_toStartOf="@id/signup_code_tv"
             app:layout_constraintTop_toBottomOf="@id/signup_email"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -110,7 +124,7 @@
             android:text="확인"
             android:textSize="14sp"
             android:textColor="@color/white"
-            android:background="@drawable/darkgreen_solid_box_10dp"
+            android:background="@drawable/sub1_solid_box_10dp"
             android:layout_marginEnd="35dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/signup_code"
@@ -122,12 +136,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:text="비밀번호"
             android:textSize="14sp"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/signup_code_tv"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/signup_pw_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="8자 이상/ 1개 이상의 숫자, 특수문자, 대소문자 필요"
+            android:textColor="@color/red"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/signup_pw_tv"
+            app:layout_constraintStart_toEndOf="@id/signup_pw_tv"
+            app:layout_constraintTop_toTopOf="@id/signup_pw_tv" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/signup_pw"
@@ -143,10 +170,11 @@
                 android:id="@+id/signup_pw_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="입력해주세요. (30자 이내)"
                 android:layout_marginHorizontal="35dp"
                 android:importantForAutofill="no"
                 android:padding="13dp"
-                android:background="@drawable/white_solid_green_stroke_box_10dp"
+                android:background="@drawable/white_solid_sub1_stroke_box_10dp"
                 android:inputType="textPassword"
                 android:maxLength="30"
                 android:textColor="@color/black"
@@ -159,12 +187,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:text="비밀번호 확인"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signup_pw" />
+
+        <TextView
+            android:id="@+id/signup_pwcheck_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="비밀번호와 일치하지 않습니다."
+            android:textColor="@color/red"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/signup_pwcheck_tv"
+            app:layout_constraintStart_toEndOf="@id/signup_pwcheck_tv"
+            app:layout_constraintTop_toTopOf="@id/signup_pwcheck_tv" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -181,10 +222,11 @@
                 android:id="@+id/signup_pw_check_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="입력해주세요. (30자 이내)"
                 android:layout_marginHorizontal="35dp"
                 android:importantForAutofill="no"
                 android:padding="13dp"
-                android:background="@drawable/white_solid_green_stroke_box_10dp"
+                android:background="@drawable/white_solid_sub1_stroke_box_10dp"
                 android:inputType="textPassword"
                 android:maxLength="30"
                 android:textColor="@color/black"
@@ -197,7 +239,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:text="닉네임"
             android:textSize="14sp"
             android:textColor="@color/black"
@@ -205,16 +247,29 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
+            android:id="@+id/signup_nickname_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="중복된 닉네임입니다."
+            android:textColor="@color/red"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/signup_nickname_tv"
+            app:layout_constraintStart_toEndOf="@id/signup_nickname_tv"
+            app:layout_constraintTop_toTopOf="@id/signup_nickname_tv" />
+
+        <TextView
             android:id="@+id/signup_nickname_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
+            android:paddingVertical="8dp"
             android:paddingHorizontal="17dp"
             android:layout_marginEnd="35dp"
             android:text="중복 확인"
             android:textSize="12sp"
             android:textColor="@color/white"
-            android:background="@drawable/darkgreen_solid_box_10dp"
+            android:background="@drawable/sub1_solid_box_10dp"
             app:layout_constraintTop_toTopOf="@id/signup_nickname_tv"
             app:layout_constraintBottom_toBottomOf="@id/signup_nickname_tv"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -224,14 +279,16 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:textSize="14sp"
+            android:hint="입력해주세요."
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="9dp"
             android:paddingVertical="13dp"
             android:paddingHorizontal="17dp"
-            android:background="@drawable/white_solid_green_stroke_box_10dp"
+            android:background="@drawable/white_solid_sub1_stroke_box_10dp"
             app:layout_constraintTop_toBottomOf="@id/signup_nickname_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+
 
         <TextView
             android:id="@+id/signup_image_tv"
@@ -245,15 +302,15 @@
             app:layout_constraintTop_toBottomOf="@id/signup_nickname"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <EditText
+        <ImageView
             android:id="@+id/signup_image"
             android:layout_width="115dp"
             android:layout_height="110dp"
-            android:layout_marginHorizontal="35dp"
+            android:layout_marginStart="35dp"
             android:layout_marginTop="9dp"
             android:layout_marginBottom="25dp"
+            android:scaleType="fitXY"
             android:background="@drawable/image_edit"
-            android:padding="20dp"
             app:layout_constraintBottom_toTopOf="@+id/signup_final"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signup_image_tv" />
@@ -262,7 +319,8 @@
             android:id="@+id/signup_final"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/green"
+            android:background="@color/gray"
+            android:clickable="false"
             android:paddingVertical="20dp"
             android:gravity="center"
             android:text="완료"
