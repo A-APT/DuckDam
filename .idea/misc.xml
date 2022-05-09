@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable-v24/darkgray_box_10dp.xml" value="0.16" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable-v24/gray_box_10dp.xml" value="0.2361111111111111" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable-v24/green_solid_box_10dp.xml" value="0.2671875" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14427083333333332" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable-v24/white_solid_green_stroke_box_10dp.xml" value="0.2361111111111111" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable/darkgreen_solid_box_10dp.xml" value="0.2361111111111111" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable/green_solid_box_10dp.xml" value="0.2361111111111111" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14427083333333332" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/drawable/splash_background.xml" value="0.2361111111111111" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/actiivty_vending.xml" value="0.17407407407407408" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/activity_duckdam.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/activity_duckdam_detail.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/activity_duckdamlist.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/activity_main.xml" value="0.17407407407407408" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/activity_navigation.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/activity_signup.xml" value="0.2" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/activity_splash.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/fragment_friendlist.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/fragment_scroll_vertical.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/fragment_setting.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/fragment_sticker.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/layout/splash_background.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/kms10/AndroidStudioProjects/Duckdam/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.12777777777777777" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
