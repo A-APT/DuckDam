@@ -1,21 +1,21 @@
-package com.aligatorapt.duckdam.view.fragment.home
+package com.aligatorapt.duckdam.view.fragment.compliment
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.aligatorapt.duckdam.databinding.FragmentScrollHorizontalBinding
+import com.aligatorapt.duckdam.databinding.FragmentComplimentBinding
 
-class ScrollHorizontalFragment : Fragment() {
-    private var _binding: FragmentScrollHorizontalBinding? = null
-    private val binding: FragmentScrollHorizontalBinding get() = _binding!!
+class ComplimentFragment : Fragment() {
+    private var _binding: FragmentComplimentBinding? = null
+    private val binding: FragmentComplimentBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentScrollHorizontalBinding.inflate(inflater, container, false)
+        _binding = FragmentComplimentBinding.inflate(inflater, container, false)
         return binding.root
     }
 

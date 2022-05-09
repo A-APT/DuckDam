@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tab_home"
+        android:icon="@drawable/home"
+        android:title="홈"/>
+    <item
+        android:id="@+id/tab_friend"
+        android:icon="@drawable/friend"
+        android:title="친구"/>
+    <item
+        android:id="@+id/tab_compliment"
+        android:icon="@drawable/compliment"
+        android:title="칭찬"/>
+    <item
+        android:id="@+id/tab_sticker"
+        android:icon="@drawable/sticker"
+        android:title="스티커"/>
+    <item
+        android:id="@+id/tab_setting"
+        android:icon="@drawable/setting"
+        android:title="설정"/>
+</menu>
