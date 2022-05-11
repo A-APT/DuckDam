@@ -16,6 +16,7 @@
         android:paddingVertical="26dp">
 
         <TextView
+            android:fontFamily="@font/dohyeon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="덕:담"
@@ -99,39 +100,38 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:contentDescription="left"
                 android:id="@+id/leftBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
+                android:contentDescription="left"
                 android:padding="10dp"
                 app:srcCompat="@drawable/back_arrow" />
 
             <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="220dp"
+                android:layout_height="220dp">
 
                 <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:contentDescription="background"
-                    android:layout_width="220dp"
-                    android:layout_height="220dp"
                     app:srcCompat="@drawable/white_circle" />
 
-                <ImageView
-                    android:contentDescription="sticker"
-                    android:id="@+id/sticker"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/sticker01" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewpager"
+                    android:padding="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
             </FrameLayout>
 
             <ImageView
-                android:contentDescription="right"
                 android:id="@+id/rightBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:contentDescription="right"
                 android:padding="10dp"
                 app:srcCompat="@drawable/front_arrow" />
         </LinearLayout>
@@ -143,13 +143,13 @@
 
             <TextView
                 android:id="@+id/content"
+                android:scrollbars="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="260dp"
                 android:background="@drawable/white_box"
                 android:paddingHorizontal="32dp"
                 android:paddingTop="64dp"
                 android:paddingBottom="32dp"
-                android:text="오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 "
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -161,7 +161,6 @@
                 android:background="@drawable/sub3_solid_box_10dp"
                 android:paddingHorizontal="34dp"
                 android:paddingVertical="10dp"
-                android:text="어깨피자"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </FrameLayout>
