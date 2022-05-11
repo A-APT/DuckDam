@@ -48,6 +48,7 @@ class ScrollHorizontalFragment : Fragment() {
                     position: Int
                 ) {
                     val intent = Intent(mActivity, DuckdamDetailActivity::class.java)
+                    intent.putExtra("item", data)
                     startActivity(intent)
                 }
             }
@@ -61,7 +62,7 @@ class ScrollHorizontalFragment : Fragment() {
 
             //배너 indicator
             leftBtn.setOnClickListener {
-                var current = viewpager.currentItem
+                val current = viewpager.currentItem
                 if (current == 0){
                     viewpager.setCurrentItem(complimentAdapter.itemCount-1, false)
                     complimentAdapter.getItem(current)
@@ -74,7 +75,7 @@ class ScrollHorizontalFragment : Fragment() {
             }
 
             rightBtn.setOnClickListener {
-                var current = viewpager.currentItem
+                val current = viewpager.currentItem
                 if (current == complimentAdapter.itemCount-1){
                     viewpager.setCurrentItem(0, false)
                     setContent(complimentAdapter.getItem(0))

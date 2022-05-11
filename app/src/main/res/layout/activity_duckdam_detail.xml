@@ -65,7 +65,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="2022.05.11"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -76,7 +75,6 @@
             android:layout_height="150dp"
             android:layout_marginTop="10dp"
             android:scrollbars="vertical"
-            android:text="오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 "
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -86,7 +84,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="bottom|end"
-            android:text="악어가"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -100,7 +97,6 @@
         android:background="@drawable/main_solid_box_10dp"
         android:gravity="center"
         android:paddingVertical="15dp"
-        android:text="악어에게 칭찬하러 가기"
         android:textColor="@color/white"
         android:textSize="18sp" />
 
@@ -113,7 +109,6 @@
         android:background="@drawable/main_solid_box_10dp"
         android:gravity="center"
         android:paddingVertical="15dp"
-        android:text="악어 친구 추가 하기"
         android:textColor="@color/white"
         android:textSize="18sp" />
 </LinearLayout>

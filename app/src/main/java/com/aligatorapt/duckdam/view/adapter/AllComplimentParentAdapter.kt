@@ -50,6 +50,7 @@ class AllComplimentParentAdapter (val context: Context, var items:ArrayList<AllC
                     position: Int
                 ) {
                     val intent = Intent(context, DuckdamDetailActivity::class.java)
+                    intent.putExtra("item", data)
                     context.startActivity(intent)
                 }
             }
