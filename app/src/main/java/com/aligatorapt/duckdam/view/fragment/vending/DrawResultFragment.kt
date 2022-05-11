@@ -1,21 +1,21 @@
-package com.aligatorapt.duckdam.view.fragment.setting
+package com.aligatorapt.duckdam.view.fragment.vending
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.aligatorapt.duckdam.databinding.FragmentSettingBinding
+import com.aligatorapt.duckdam.databinding.FragmentDrawResultBinding
 
-class SettingFragment : Fragment() {
-    private var _binding: FragmentSettingBinding? = null
-    private val binding: FragmentSettingBinding get() = _binding!!
+class DrawResultFragment : Fragment() {
+    private var _binding: FragmentDrawResultBinding? = null
+    private val binding: FragmentDrawResultBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        _binding = FragmentDrawResultBinding.inflate(inflater, container, false)
         return binding.root
     }
 
