@@ -52,6 +52,11 @@ class NavigationActivity : AppCompatActivity() {
                 //초기값 셋팅
                 selectedItemId = R.id.tab_home
             }
+
+            val position = intent.getIntExtra("position", 0)
+            if(position != 0){
+                selectedBottomNavigationItem(position)
+            }
         }
     }
 
