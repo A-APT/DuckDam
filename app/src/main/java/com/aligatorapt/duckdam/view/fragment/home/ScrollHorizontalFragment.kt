@@ -34,6 +34,9 @@ class ScrollHorizontalFragment : Fragment() {
                 val intent = Intent(mActivity, VendingActivity::class.java)
                 startActivity(intent)
             }
+            allCompliment.setOnClickListener {
+                mActivity.changeFragment(ScrollVerticalFragment())
+            }
         }
     }
 

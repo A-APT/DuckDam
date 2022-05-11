@@ -64,7 +64,7 @@ class NavigationActivity : AppCompatActivity() {
         binding.bottomNavigation.selectedItemId = _itemId
     }
 
-    private fun changeFragment(fragment: Fragment) {
+    fun changeFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.navigationFrameLayout, fragment)
         transaction.commit()
