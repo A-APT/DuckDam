@@ -54,6 +54,7 @@ class ScrollHorizontalFragment : Fragment() {
             }
             viewpager.adapter = complimentAdapter
             viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            viewpager.isUserInputEnabled = false
 
             //칭찬 개수 설정 및 데이터 설정
             todayCount.text = complimentAdapter.itemCount.toString()
