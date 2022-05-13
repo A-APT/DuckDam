@@ -1,4 +1,35 @@
 package com.aligatorapt.duckdam.view.fragment.compliment
 
-class FriendListFragment {
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.aligatorapt.duckdam.databinding.FragmentFriendlistBinding
+
+class FriendListFragment : Fragment() {
+    private var _binding: FragmentFriendlistBinding? = null
+    private val binding: FragmentFriendlistBinding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentFriendlistBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
+    private fun init(){
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
