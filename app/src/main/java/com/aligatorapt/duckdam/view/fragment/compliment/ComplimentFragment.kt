@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.aligatorapt.duckdam.databinding.FragmentComplimentBinding
+import com.aligatorapt.duckdam.view.activity.NavigationActivity
+import com.aligatorapt.duckdam.view.data.SelectList
+import com.aligatorapt.duckdam.view.dialog.FriendListDialog
 
 class ComplimentFragment : Fragment() {
     private var _binding: FragmentComplimentBinding? = null
@@ -25,7 +28,42 @@ class ComplimentFragment : Fragment() {
     }
 
     private fun init(){
+        val mActivity = activity as NavigationActivity
+        binding.apply {
+            //다이얼로그
+            val bundle = Bundle()
+            edit.setOnClickListener {
+                val friendListDialog = FriendListDialog()
+                bundle.putString("title","스티커 고르기")
+                friendListDialog.arguments = bundle
+                friendListDialog.itemClickListener = object: FriendListDialog.OnItemClickListener{
+                    override fun OnItemClick(isSticker: Boolean, data: SelectList) {
+                        if(isSticker){
+                            sticker.setImageResource(data.sticker)
+                        }else{
+                            receiver.text = data.name
+                        }
+                    }
+                }
+                friendListDialog.show(mActivity.supportFragmentManager, "FriendListDialog")
+            }
+            receiverLayout.setOnClickListener {
+                val friendListDialog = FriendListDialog()
+                bundle.putString("title","친구 목록")
+                friendListDialog.arguments = bundle
+                friendListDialog.itemClickListener = object: FriendListDialog.OnItemClickListener{
+                    override fun OnItemClick(isSticker: Boolean, data: SelectList) {
+                        if(isSticker){
+                            sticker.setImageResource(data.sticker)
+                        }else{
+                            receiver.text = data.name
+                        }
+                    }
+                }
+                friendListDialog.show(mActivity.supportFragmentManager, "FriendListDialog")
+            }
 
+        }
     }
 
     override fun onDestroy() {

@@ -111,19 +111,19 @@ class ScrollHorizontalFragment : Fragment() {
     private fun setList(): ArrayList<AllComplimentChild> {
         return arrayListOf(
             AllComplimentChild(
-                sticker = R.drawable.sticker01,
+                sticker = R.drawable.sticker06,
                 date = "2022.05.11",
                 content = "첫번째 내용이야 오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)오늘 하루 도움을 줘서 너무 고마워! 진짜 너무 고마워서 그런데 나랑 같이 밥먹으러 가자 내가 밥사줄게, 학교 근처에 미분당 알아? 나 거기 못간지 3년째야,, 진짜 너무 먹고싶었는데 갈때 마다 브레이크타임이더라고,, 그러니까 꼭 3~5시 제외하고 약속 잡다!! 아 생각만 해도 맛있겠다",
                 from = "악어"
             ),
             AllComplimentChild(
-                sticker = R.drawable.sticker02,
+                sticker = R.drawable.sticker07,
                 date = "2022.05.11",
                 content = "두번째 내용이야 너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                 from = "오리"
             ),
             AllComplimentChild(
-                sticker = R.drawable.sticker03,
+                sticker = R.drawable.sticker08,
                 date = "2022.05.11",
                 content = "세번째 내용이야 너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                 from = "악어"

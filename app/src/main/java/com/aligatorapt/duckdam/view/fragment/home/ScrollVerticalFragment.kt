@@ -55,25 +55,31 @@ class ScrollVerticalFragment : Fragment() {
                 "2022.05.11",
                 arrayListOf(
                     AllComplimentChild(
-                        sticker = R.drawable.sticker01,
+                        sticker = R.drawable.sticker06,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
                     ),
                     AllComplimentChild(
-                        sticker = R.drawable.sticker02,
+                        sticker = R.drawable.sticker07,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
                     ),
                     AllComplimentChild(
-                        sticker = R.drawable.sticker03,
+                        sticker = R.drawable.sticker08,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
                     ),
                     AllComplimentChild(
-                        sticker = R.drawable.sticker04,
+                        sticker = R.drawable.sticker09,
+                        date = "2022.05.11",
+                        content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
+                        from = "악어"
+                    ),
+                    AllComplimentChild(
+                        sticker = R.drawable.sticker10,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
@@ -85,13 +91,7 @@ class ScrollVerticalFragment : Fragment() {
                         from = "악어"
                     ),
                     AllComplimentChild(
-                        sticker = R.drawable.sticker06,
-                        date = "2022.05.11",
-                        content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
-                        from = "악어"
-                    ),
-                    AllComplimentChild(
-                        sticker = R.drawable.sticker08,
+                        sticker = R.drawable.sticker01,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
@@ -102,13 +102,13 @@ class ScrollVerticalFragment : Fragment() {
                 "2022.05.10",
                 arrayListOf(
                     AllComplimentChild(
-                        sticker = R.drawable.sticker01,
+                        sticker = R.drawable.sticker06,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
                     ),
                     AllComplimentChild(
-                        sticker = R.drawable.sticker02,
+                        sticker = R.drawable.sticker07,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
@@ -119,13 +119,13 @@ class ScrollVerticalFragment : Fragment() {
                 "2022.05.19",
                 arrayListOf(
                     AllComplimentChild(
-                        sticker = R.drawable.sticker01,
+                        sticker = R.drawable.sticker06,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
                     ),
                     AllComplimentChild(
-                        sticker = R.drawable.sticker02,
+                        sticker = R.drawable.sticker07,
                         date = "2022.05.11",
                         content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
                         from = "악어"
