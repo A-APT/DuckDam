@@ -26,7 +26,7 @@ class StickerAdapter(val context: Context, var items: ArrayList<SelectList>)
                 rowStickerName.text = items[position].name
             }else{
                 rowStickerSticker.setImageResource(R.drawable.small_sample)
-                rowStickerSticker.setPadding(10)
+                rowStickerSticker.setPadding(12)
                 rowStickerName.text = "???"
             }
         }
