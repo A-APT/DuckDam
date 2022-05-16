@@ -1,15 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.amar.library.ui.StickyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/sub2"
+    app:stickyHeader="@id/sticker_layout"
     tools:context=".view.fragment.sticker.StickerFragment">
 
-    <TextView
-        android:id="@+id/textView2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="스티커" />
-</LinearLayout>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/sticker_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_bottom"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/sticker_rv">
+
+            <TextView
+                android:id="@+id/sticker_title"
+                android:fontFamily="@font/dohyeon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="스티커판"
+                android:textColor="@color/main"
+                android:textSize="25sp"
+                android:background="@color/white"
+                android:paddingBottom="20dp"
+                android:paddingStart="30dp"
+                android:paddingTop="30dp"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sticker_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:spanCount="2"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="25dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/sticker_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/row_sticker"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.amar.library.ui.StickyScrollView>
