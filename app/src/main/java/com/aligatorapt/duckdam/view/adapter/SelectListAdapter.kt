@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aligatorapt.duckdam.databinding.RowDialogBinding
+import com.aligatorapt.duckdam.view.data.AllComplimentChild
 import com.aligatorapt.duckdam.view.data.SelectList
 
 class SelectListAdapter (val context: Context, var items: ArrayList<SelectList>, val isFriendPage: Boolean)
@@ -13,9 +14,16 @@ class SelectListAdapter (val context: Context, var items: ArrayList<SelectList>,
 
     interface OnItemClickListener{
         fun OnItemClick(data: SelectList, position: Int)
+        fun OnAddClick(data: SelectList, position: Int)
     }
 
     var itemClickListener: OnItemClickListener ?= null
+
+    fun setData(newData:ArrayList<SelectList>){
+        items.clear()
+        items.addAll(newData)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectListAdapter.MyViewHolder {
         val view = RowDialogBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,6 +37,7 @@ class SelectListAdapter (val context: Context, var items: ArrayList<SelectList>,
             }else {
                 rowAdd.visibility = View.GONE
             }
+            if(position == 0) rowView.visibility = View.GONE
             rowSticker.setImageResource(items[position].sticker)
             rowName.text = items[position].name
         }
@@ -40,6 +49,10 @@ class SelectListAdapter (val context: Context, var items: ArrayList<SelectList>,
         init {
             binding.rowLayout.setOnClickListener{
                 itemClickListener?.OnItemClick(items[adapterPosition], adapterPosition)
+            }
+            binding.rowAdd.setOnClickListener {
+                binding.rowAdd.visibility = View.GONE
+                itemClickListener?.OnAddClick(items[adapterPosition], adapterPosition)
             }
         }
     }

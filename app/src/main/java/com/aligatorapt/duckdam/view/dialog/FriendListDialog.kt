@@ -1,7 +1,9 @@
 package com.aligatorapt.duckdam.view.dialog
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
@@ -66,6 +68,8 @@ class FriendListDialog: DialogFragment() {
                     itemClickListener?.OnItemClick(isSticker,data)
                     dismiss()
                 }
+                override fun OnAddClick(data: SelectList, position: Int) {
+                }
             }
 
             friendlist.adapter = selectAdapter
@@ -77,6 +81,20 @@ class FriendListDialog: DialogFragment() {
     override fun onResume() {
         super.onResume()
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        //디바이스 크기
+        val windowManager = activity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+
+        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
+        val deviceWidth = size.x
+        val deviceHeight = size.y
+        params?.width = (deviceWidth * 0.8).toInt()
+        params?.height = (deviceHeight * 0.65).toInt()
+        dialog?.window?.attributes = params as WindowManager.LayoutParams
+
     }
 
     override fun onDestroy() {
@@ -86,6 +104,36 @@ class FriendListDialog: DialogFragment() {
 
     private fun setStickerList(): ArrayList<SelectList> {
         return arrayListOf(
+            SelectList(
+                sticker = R.drawable.sticker01,
+                name = "라우디",
+                isAdded = true
+            ),
+            SelectList(
+                sticker = R.drawable.sticker02,
+                name = "장미콩",
+                isAdded = true
+            ),
+            SelectList(
+                sticker = R.drawable.sticker03,
+                name = "단무지",
+                isAdded = true
+            ),
+            SelectList(
+                sticker = R.drawable.sticker04,
+                name = "빈",
+                isAdded = true
+            ),
+            SelectList(
+                sticker = R.drawable.sticker05,
+                name = "고구마",
+                isAdded = true
+            ),
+            SelectList(
+                sticker = R.drawable.sticker06,
+                name = "사랑니",
+                isAdded = true
+            ),
             SelectList(
                 sticker = R.drawable.sticker01,
                 name = "라우디",
