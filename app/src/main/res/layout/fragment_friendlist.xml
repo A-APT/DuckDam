@@ -39,12 +39,15 @@
 
             <EditText
                 android:id="@+id/friendlist_search_et"
+                android:singleLine="true"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/white_solid_sub1_stroke_box_10dp"
                 android:hint="친구를 검색해보세요."
-                android:padding="15dp"
+                android:paddingVertical="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="50dp"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/title"
                 app:layout_constraintEnd_toEndOf="parent"
