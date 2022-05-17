@@ -49,6 +49,30 @@ class ComplimentFragment : Fragment() {
         val mActivity = activity as NavigationActivity
         binding.apply {
 
+            //content textwatcher
+            content.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    val input: String = content.text.toString()
+                    Log.e("TEXTWATCHER",input)
+                    textnum.text = input.length.toString() + " / 200"
+                }
+
+                override fun afterTextChanged(s: Editable) {}
+            })
+
             //다이얼로그
             edit.setOnClickListener {
                 val bundle = Bundle()
@@ -93,28 +117,6 @@ class ComplimentFragment : Fragment() {
                 }else {
                     Toast.makeText(requireContext(), "친구와 스티커, 칭찬을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
-
-                content.addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(
-                        s: CharSequence,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        val input: String = content.text.toString()
-                        textnum.setText(input.length.toString() + " / 200")
-                    }
-
-                    override fun afterTextChanged(s: Editable) {}
-                })
             }
         }
     }

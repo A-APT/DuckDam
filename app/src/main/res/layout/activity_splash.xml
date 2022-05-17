@@ -23,7 +23,7 @@
         android:id="@+id/splash_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="직접 만들어서 붙이는 칭찬 스티커"
+        android:text="온라인으로 붙이는 칭찬 스티커"
         android:textSize="18sp"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
