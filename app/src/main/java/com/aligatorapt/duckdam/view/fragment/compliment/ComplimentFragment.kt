@@ -87,6 +87,9 @@ class ComplimentFragment : Fragment() {
 
                 if (receiver.text != "???" && sticker.drawable.constantState!! != ContextCompat.getDrawable(requireContext(), R.drawable.big_image)?.constantState && content.text.toString() != "") {
                     Toast.makeText(requireContext(), "칭찬이 전송되었습니다!", Toast.LENGTH_SHORT).show()
+                    receiver.text = "???"
+                    sticker.setImageResource(R.drawable.big_image)
+                    content.setText("")
                 }else {
                     Toast.makeText(requireContext(), "친구와 스티커, 칭찬을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
