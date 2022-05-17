@@ -50,7 +50,7 @@
             android:layout_height="160dp"
             android:layout_gravity="center"
             android:contentDescription="sticker"
-            app:srcCompat="@drawable/sticker01" />
+            app:srcCompat="@drawable/sticker06" />
     </FrameLayout>
 
     <LinearLayout

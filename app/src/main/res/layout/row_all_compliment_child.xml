@@ -11,5 +11,5 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:contentDescription="sticker"
-        app:srcCompat="@drawable/sticker01" />
+        app:srcCompat="@drawable/sticker06" />
 </LinearLayout>
