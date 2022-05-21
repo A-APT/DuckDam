@@ -46,4 +46,16 @@ dependencies {
 
     //sticky scoll view
     implementation 'com.github.amarjain07:StickyScrollView:1.0.3'
+    // Log
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    //KTX
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    //Retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    //gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+
 }
