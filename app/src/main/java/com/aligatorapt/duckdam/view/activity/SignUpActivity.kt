@@ -20,6 +20,7 @@ import com.aligatorapt.duckdam.dto.auth.EmailTokenDto
 import com.aligatorapt.duckdam.dto.user.RegisterDto
 import com.aligatorapt.duckdam.model.UserModel.register
 import com.aligatorapt.duckdam.retrofit.callback.ApiCallback
+import com.aligatorapt.duckdam.retrofit.callback.RegisterCallback
 import com.aligatorapt.duckdam.viewModel.RegisterViewModel
 import java.lang.Exception
 import java.util.regex.Pattern
@@ -52,12 +53,17 @@ class SignUpActivity: AppCompatActivity() {
                             password = signupPwEt.text.toString(),
                             email = model.email.value.toString(),
                             profile = model.profile.value
-                        ), object : ApiCallback {
-                            override fun apiCallback(flag: Boolean) {
+                        ), object : RegisterCallback {
+                            override fun registerCallback(flag: Boolean, isNickname: Boolean) {
                                 if (flag) {
+                                    signupNicknameError.visibility = View.GONE
                                     val intent = Intent(this@SignUpActivity,LoginActivity::class.java)
                                     finish()
                                     startActivity(intent)
+                                }else if(!flag && isNickname){
+                                    signupNicknameError.visibility = View.VISIBLE
+                                    arr[4] = false
+                                    setIsActivateBtn()
                                 }
                             }
                         }
@@ -216,6 +222,7 @@ class SignUpActivity: AppCompatActivity() {
 
     private fun setIsActivateBtn(){
         Log.e("SETISACTIVE",arr[0].toString()+arr[1].toString()+arr[2].toString()+arr[3].toString()+arr[4].toString()+arr[5].toString())
+        isActivateBtn = true
         for(element in arr){
             if(!element){
                 isActivateBtn = false
@@ -226,7 +233,7 @@ class SignUpActivity: AppCompatActivity() {
             binding.signupFinal.isClickable = true
             binding.signupFinal.setBackgroundColor(ContextCompat.getColor(this, R.color.main))
         }else {
-            binding.signupFinal.isClickable = false
+            binding.signupFinal.isClickable = true
             binding.signupFinal.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
         }
     }

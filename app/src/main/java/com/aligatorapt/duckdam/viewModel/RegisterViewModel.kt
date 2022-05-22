@@ -9,6 +9,7 @@ import com.aligatorapt.duckdam.dto.user.RegisterDto
 import com.aligatorapt.duckdam.model.EmailModel
 import com.aligatorapt.duckdam.model.UserModel
 import com.aligatorapt.duckdam.retrofit.callback.ApiCallback
+import com.aligatorapt.duckdam.retrofit.callback.RegisterCallback
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,7 +45,7 @@ class RegisterViewModel: ViewModel() {
         }
     }
 
-    fun registser(_userInfo: RegisterDto, callback: ApiCallback){
+    fun registser(_userInfo: RegisterDto, callback: RegisterCallback){
         viewModelScope.launch {
             withContext(dispatcher){
                 UserModel.register(_userInfo, callback)
