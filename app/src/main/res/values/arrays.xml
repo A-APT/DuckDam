@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="stickerImg">
+        <item>@drawable/sticker01</item>
+        <item>@drawable/sticker02</item>
+        <item>@drawable/sticker03</item>
+        <item>@drawable/sticker04</item>
+        <item>@drawable/sticker05</item>
+        <item>@drawable/sticker06</item>
+        <item>@drawable/sticker07</item>
+        <item>@drawable/sticker08</item>
+        <item>@drawable/sticker09</item>
+        <item>@drawable/sticker10</item>
+    </array>
+</resources>

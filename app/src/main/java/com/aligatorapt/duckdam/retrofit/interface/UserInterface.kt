@@ -6,10 +6,7 @@ import com.aligatorapt.duckdam.dto.user.RegisterDto
 import com.aligatorapt.duckdam.dto.user.UserResponseDto
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.HeaderMap
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface UserInterface {
     @POST("/user/register")
@@ -38,7 +35,7 @@ interface UserInterface {
         @HeaderMap httpHeaders: HashMap<String, String>
     ): Call<List<Boolean>>
 
-    @POST("/user/slot")
+    @GET("/user/slot")
     fun isEligibleForSlot(
         @HeaderMap httpHeaders: HashMap<String, String>,
     ): Call<Boolean>

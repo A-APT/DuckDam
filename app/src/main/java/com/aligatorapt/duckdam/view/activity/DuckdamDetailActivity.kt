@@ -6,7 +6,8 @@ import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.ActivityDuckdamDetailBinding
-import com.aligatorapt.duckdam.view.data.AllComplimentChild
+import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
+import java.text.SimpleDateFormat
 
 class DuckdamDetailActivity : AppCompatActivity()  {
     lateinit var binding: ActivityDuckdamDetailBinding
@@ -22,13 +23,15 @@ class DuckdamDetailActivity : AppCompatActivity()  {
     private fun init() {
         binding.apply {
             //데이터 설정
-            val item = intent.getSerializableExtra("item") as AllComplimentChild
-            sticker.setImageResource(item.sticker)
-            date.text = item.date
-            content.text = item.content
-            from.text = "${item.from}가"
-            complimentBtn.text = "${item.from}에게 칭찬하러 가기"
-            addFriendBtn.text = "${item.from} 친구 추가하기"
+            val item = intent.getSerializableExtra("item") as ComplimentResponseDto
+
+            val dateFormat = SimpleDateFormat("yyyy.MM.dd")
+            sticker.setImageResource(resources.obtainTypedArray(R.array.stickerImg).getResourceId(item.stickerNum, 0))
+            date.text = dateFormat.format(item.date)
+            content.text = item.message
+            from.text = "${item.fromId}가" //Todo change nickname
+            complimentBtn.text = "${item.fromId}에게 칭찬하러 가기"
+            addFriendBtn.text = "${item.fromId} 친구 추가하기"
 
             content.movementMethod = ScrollingMovementMethod()
             complimentDetailBackBtn.setOnClickListener {

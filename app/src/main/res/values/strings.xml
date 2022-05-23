@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">덕:담</string>
+
+    <string-array name="sticker">
+        <item>라우디</item>
+        <item>장미콩</item>
+        <item>단무지</item>
+        <item>빈</item>
+        <item>고구마</item>
+        <item>사랑니</item>
+        <item>보라불</item>
+        <item>꿀벌복숭</item>
+        <item>동동</item>
+        <item>엄지공주</item>
+    </string-array>
 </resources>
