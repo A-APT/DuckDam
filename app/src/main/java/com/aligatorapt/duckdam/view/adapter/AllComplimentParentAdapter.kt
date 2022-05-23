@@ -1,18 +1,18 @@
 package com.aligatorapt.duckdam.view.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aligatorapt.duckdam.databinding.RowAllComplimentParentBinding
 import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
-import com.aligatorapt.duckdam.view.activity.DuckdamDetailActivity
-import com.aligatorapt.duckdam.view.data.AllComplimentChild
+import com.aligatorapt.duckdam.view.activity.NavigationActivity
 import com.aligatorapt.duckdam.view.data.AllComplimentParent
+import com.aligatorapt.duckdam.view.fragment.compliment.ComplimentDetailFragment
+import com.aligatorapt.duckdam.viewModel.ComplimentViewModel
 
-class AllComplimentParentAdapter (var items:ArrayList<AllComplimentParent>, val context: Context)
+class AllComplimentParentAdapter (var items:ArrayList<AllComplimentParent>, val context: Context, val model: ComplimentViewModel)
     : RecyclerView.Adapter<AllComplimentParentAdapter.MyViewHolder>(){
 
     inner class MyViewHolder(val binding: RowAllComplimentParentBinding): RecyclerView.ViewHolder(binding.root) {
@@ -50,9 +50,8 @@ class AllComplimentParentAdapter (var items:ArrayList<AllComplimentParent>, val 
                     data: ComplimentResponseDto,
                     position: Int
                 ) {
-                    val intent = Intent(context, DuckdamDetailActivity::class.java)
-                    intent.putExtra("item", data)
-                    context.startActivity(intent)
+                    model?.setDetailCompliment(data, false)
+                    (context as NavigationActivity).changeFragment(ComplimentDetailFragment())
                 }
             }
             childRecyclerView.adapter = childAdapter

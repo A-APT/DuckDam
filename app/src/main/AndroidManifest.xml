@@ -38,9 +38,6 @@
             android:name=".view.activity.VendingActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.DuckdamDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.activity.FriendListDetailActivity"
             android:exported="false"/>
     </application>

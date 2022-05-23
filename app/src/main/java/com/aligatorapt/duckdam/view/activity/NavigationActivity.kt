@@ -39,18 +39,23 @@ class NavigationActivity : AppCompatActivity() {
                     when (it.itemId) {
                         R.id.tab_home -> {
                             changeFragment(ScrollHorizontalFragment())
+                            showTabView(true)
                         }
                         R.id.tab_friend -> {
                             changeFragment(FriendListFragment())
+                            showTabView(true)
                         }
                         R.id.tab_compliment -> {
                             changeFragment(ComplimentFragment())
+                            showTabView(true)
                         }
                         R.id.tab_sticker -> {
                             changeFragment(StickerFragment())
+                            showTabView(true)
                         }
                         R.id.tab_setting -> {
                             changeFragment(SettingFragment())
+                            showTabView(true)
                         }
                     }
                     true
@@ -68,6 +73,13 @@ class NavigationActivity : AppCompatActivity() {
 
     fun selectedBottomNavigationItem(_itemId: Int){
         binding.bottomNavigation.selectedItemId = _itemId
+    }
+
+    fun showTabView(flag: Boolean){
+        if(flag)
+            binding.bottomNavigation.visibility = View.VISIBLE
+        else
+            binding.bottomNavigation.visibility = View.GONE
     }
 
     fun changeFragment(fragment: Fragment) {

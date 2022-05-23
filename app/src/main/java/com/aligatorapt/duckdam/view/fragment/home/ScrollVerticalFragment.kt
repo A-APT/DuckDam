@@ -41,7 +41,7 @@ class ScrollVerticalFragment : Fragment() {
         val mActivity = activity as NavigationActivity
         binding.apply {
             //group list 매니저 등록
-            parentAdapter = AllComplimentParentAdapter(arrayListOf(), mActivity)
+            parentAdapter = AllComplimentParentAdapter(arrayListOf(), mActivity, model!!)
             recyclerAllCompliment.adapter = parentAdapter
 
             //데이터 가져오기

@@ -12,10 +12,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.aligatorapt.duckdam.databinding.FragmentScrollHorizontalBinding
 import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
 import com.aligatorapt.duckdam.retrofit.callback.ComplimentsCallback
-import com.aligatorapt.duckdam.view.activity.DuckdamDetailActivity
 import com.aligatorapt.duckdam.view.activity.NavigationActivity
 import com.aligatorapt.duckdam.view.activity.VendingActivity
 import com.aligatorapt.duckdam.view.adapter.HomeStickerAdapter
+import com.aligatorapt.duckdam.view.fragment.compliment.ComplimentDetailFragment
 import com.aligatorapt.duckdam.viewModel.ComplimentSingleton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,15 +54,14 @@ class ScrollHorizontalFragment : Fragment() {
                     data: ComplimentResponseDto,
                     position: Int
                 ) {
-                    val intent = Intent(mActivity, DuckdamDetailActivity::class.java)
-                    intent.putExtra("item", data)
-                    startActivity(intent)
+                    model?.setDetailCompliment(data, true)
+                    mActivity.changeFragment(ComplimentDetailFragment())
                 }
             }
             viewpager.adapter = complimentAdapter
             viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             viewpager.isUserInputEnabled = false
-            
+
             //데이터 가져오기
             model?.findCompliments(object: ComplimentsCallback {
                 override fun complimentsCallback(

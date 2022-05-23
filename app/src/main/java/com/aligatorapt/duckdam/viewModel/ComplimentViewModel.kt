@@ -17,12 +17,20 @@ class ComplimentViewModel: ViewModel() {
     val compliments = MutableLiveData<List<ComplimentResponseDto>?>()
     val todayCompliments = MutableLiveData<List<ComplimentResponseDto>?>()
 
+    val detailCompliment = MutableLiveData<ComplimentResponseDto?>()
+    val isTodayToDetail = MutableLiveData<Boolean>()
+
     fun setCompliments(_data: List<ComplimentResponseDto>){
         compliments.value = _data
     }
 
     fun setTodayCompliments(_data: List<ComplimentResponseDto>){
         todayCompliments.value = _data
+    }
+
+    fun setDetailCompliment(_data: ComplimentResponseDto, _flag: Boolean){
+        detailCompliment.value = _data
+        isTodayToDetail.value = _flag
     }
 
     fun findCompliments(callback: ComplimentsCallback){
