@@ -8,24 +8,83 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.ActivitySignupBinding
+import com.aligatorapt.duckdam.dto.auth.EmailTokenDto
+import com.aligatorapt.duckdam.dto.user.RegisterDto
+import com.aligatorapt.duckdam.model.UserModel.register
+import com.aligatorapt.duckdam.retrofit.callback.ApiCallback
+import com.aligatorapt.duckdam.retrofit.callback.RegisterCallback
+import com.aligatorapt.duckdam.viewModel.RegisterViewModel
 import java.lang.Exception
 import java.util.regex.Pattern
 
 class SignUpActivity: AppCompatActivity() {
     lateinit var binding: ActivitySignupBinding
-    private var arr = booleanArrayOf(false,false,false,false,false,false)
+    private var arr = booleanArrayOf(false,false,false,false,false)
     private val PROFILE_IMAGE = 100
+    private var isActivateBtn = false
+
+    private val model: RegisterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        emailCode()
+        check()
+        register()
+    }
+
+    private fun emailCode() {
+        binding.apply {
+            
+            //인증코드 전송
+            signupCodesend.setOnClickListener {
+                model.generateEmailAuth(signupEmail.text.toString(), object: ApiCallback{
+                    override fun apiCallback(flag: Boolean) {
+                        if(flag){
+                            model.setEmail(signupEmail.text.toString())
+                        }
+                    }
+                })
+            }
+
+            //인증코드 확인
+            signupCodeTv.setOnClickListener {
+                if(arr[0]){
+                    model.verifyEmailToken(
+                        EmailTokenDto(
+                            email = signupEmail.text.toString(),
+                            token = signupCode.text.toString()
+                        ),
+                        object : ApiCallback {
+                            override fun apiCallback(flag: Boolean) {
+                                if (flag) {
+                                    arr[1] = true
+                                    signupEmailError.visibility = View.VISIBLE
+                                    signupEmailError.text = "인증되었습니다."
+                                } else {
+                                    signupEmailError.visibility = View.VISIBLE
+                                    signupEmailError.text = "인증코드가 맞지 않습니다."
+                                    arr[1] = false
+                                }
+                                setIsActivateBtn()
+                            }
+                        })
+                }
+            }
+        }
+    }
+
+    private fun check(){
         binding.apply {
             signupBackIv.setOnClickListener {
                 finish()
@@ -41,12 +100,6 @@ class SignUpActivity: AppCompatActivity() {
                     signupEmailError.visibility = View.GONE
                     arr[0] = true
                 }
-                setIsActivateBtn()
-            }
-
-            //인증코드 확인
-            signupCode.doAfterTextChanged {
-                arr[1] = signupCode.text.toString() != ""
                 setIsActivateBtn()
             }
 
@@ -70,7 +123,9 @@ class SignUpActivity: AppCompatActivity() {
 
             //닉네임
             signupNickname.doAfterTextChanged {
-                arr[4] = signupNickname.text.toString() != ""
+                if(signupNickname.text.toString() != ""){
+                    arr[4] = true
+                }
                 setIsActivateBtn()
             }
 
@@ -80,11 +135,35 @@ class SignUpActivity: AppCompatActivity() {
                 intent.type = MediaStore.Images.Media.CONTENT_TYPE
                 startActivityForResult(intent, PROFILE_IMAGE)
             }
+        }
+    }
 
+    private fun register() {
+        binding.apply {
             signupFinal.setOnClickListener {
-                val intent = Intent(this@SignUpActivity,LoginActivity::class.java)
-                finish()
-                startActivity(intent)
+                if(isActivateBtn){
+                    model.registser(
+                        RegisterDto(
+                            name = signupNickname.text.toString(),
+                            password = signupPwEt.text.toString(),
+                            email = model.email.value.toString(),
+                            profile = model.profile.value
+                        ), object : RegisterCallback {
+                            override fun registerCallback(flag: Boolean, isNickname: Boolean) {
+                                if (flag) {
+                                    signupNicknameError.visibility = View.GONE
+                                    val intent = Intent(this@SignUpActivity,LoginActivity::class.java)
+                                    finish()
+                                    startActivity(intent)
+                                }else if(!flag && isNickname){
+                                    signupNicknameError.visibility = View.VISIBLE
+                                    arr[4] = false
+                                    setIsActivateBtn()
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
     }
@@ -98,21 +177,22 @@ class SignUpActivity: AppCompatActivity() {
                     currentImageUri?.let {
                         if (Build.VERSION.SDK_INT < 28) {
                             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, currentImageUri)
+                            model.setProfile(bitmap.toString())
                             binding.signupImage.setImageBitmap(bitmap)
+                            //string -> bytearray
+                            // bytearray.contentToString()
                         } else {
                             val source = ImageDecoder.createSource(contentResolver, currentImageUri)
                             val bitmap = ImageDecoder.decodeBitmap(source)
+                            model.setProfile(bitmap.toString())
                             binding.signupImage.setImageBitmap(bitmap)
                         }
-                        arr[5] = true
                     }
                 } catch (e: Exception) {
-                    arr[5] = false
                     e.printStackTrace()
                 }
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show()
-                arr[5] = false
+                Toast.makeText(this, "사진 선택이 취소되었습니다.", Toast.LENGTH_LONG).show()
             }
         }
         setIsActivateBtn()
@@ -138,19 +218,19 @@ class SignUpActivity: AppCompatActivity() {
     }
 
     private fun setIsActivateBtn(){
-        Log.e("SETISACTIVE",arr[0].toString()+arr[1].toString()+arr[2].toString()+arr[3].toString()+arr[4].toString()+arr[5].toString())
-        var isActive = true
+        Log.e("SETISACTIVE",arr[0].toString()+arr[1].toString()+arr[2].toString()+arr[3].toString()+arr[4].toString())
+        isActivateBtn = true
         for(element in arr){
             if(!element){
-                isActive = false
+                isActivateBtn = false
                 break
             }
         }
-        if(isActive){
+        if(isActivateBtn){
             binding.signupFinal.isClickable = true
             binding.signupFinal.setBackgroundColor(ContextCompat.getColor(this, R.color.main))
         }else {
-            binding.signupFinal.isClickable = false
+            binding.signupFinal.isClickable = true
             binding.signupFinal.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
         }
     }

@@ -147,6 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="260dp"
                 android:background="@drawable/white_box"
+                android:lineSpacingExtra="3dp"
                 android:paddingHorizontal="32dp"
                 android:paddingTop="64dp"
                 android:paddingBottom="32dp"
