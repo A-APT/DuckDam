@@ -3,24 +3,35 @@ package com.aligatorapt.duckdam.view.fragment.home
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.FragmentScrollHorizontalBinding
+import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
+import com.aligatorapt.duckdam.retrofit.callback.ComplimentsCallback
 import com.aligatorapt.duckdam.view.activity.DuckdamDetailActivity
 import com.aligatorapt.duckdam.view.activity.NavigationActivity
 import com.aligatorapt.duckdam.view.activity.VendingActivity
 import com.aligatorapt.duckdam.view.adapter.HomeStickerAdapter
 import com.aligatorapt.duckdam.view.data.AllComplimentChild
+import com.aligatorapt.duckdam.viewModel.ComplimentSingleton
+import com.aligatorapt.duckdam.viewModel.RegisterViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ScrollHorizontalFragment : Fragment() {
     private var _binding: FragmentScrollHorizontalBinding? = null
     private val binding: FragmentScrollHorizontalBinding get() = _binding!!
 
     private lateinit var complimentAdapter: HomeStickerAdapter
+
+    private val model = ComplimentSingleton.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +49,41 @@ class ScrollHorizontalFragment : Fragment() {
     private fun init() {
         val mActivity = activity as NavigationActivity
         binding.apply {
+            //데이터 가져오기
+            model?.findCompliments(object: ComplimentsCallback {
+                override fun complimentsCallback(
+                    flag: Boolean,
+                    data: ArrayList<ComplimentResponseDto>?
+                ) {
+                    if(flag){
+                        if (data != null) {
+                            Log.e("DATA::", data.toString())
+
+                            if (data.isNotEmpty()) {
+                                model.setCompliments(data)
+
+                                val todayCompliment = ArrayList<ComplimentResponseDto>()
+
+                                val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+                                val timeNow = dateFormat.format(Date(System.currentTimeMillis()))
+
+                                for (compliment in data) {
+                                    if (timeNow == dateFormat.format(compliment.date))
+                                        todayCompliment.add(compliment)
+                                }
+
+                                model.setTodayCompliments(todayCompliment)
+
+                                showCompliment.visibility = View.VISIBLE
+                                emptyResult.visibility = View.GONE
+                            } else {
+                                showCompliment.visibility = View.GONE
+                                emptyResult.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                }
+            })
             //배너
             complimentAdapter = HomeStickerAdapter(setList())
             complimentAdapter.itemClickListener = object : HomeStickerAdapter.OnItemClickListener {

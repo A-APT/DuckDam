@@ -7,12 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.ActivityNavigationBinding
+import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
+import com.aligatorapt.duckdam.retrofit.callback.ComplimentsCallback
 import com.aligatorapt.duckdam.view.fragment.compliment.ComplimentFragment
 import com.aligatorapt.duckdam.view.fragment.compliment.FriendListFragment
 import com.aligatorapt.duckdam.view.fragment.home.ScrollHorizontalFragment
 import com.aligatorapt.duckdam.view.fragment.home.ScrollVerticalFragment
 import com.aligatorapt.duckdam.view.fragment.setting.SettingFragment
 import com.aligatorapt.duckdam.view.fragment.sticker.StickerFragment
+import com.aligatorapt.duckdam.viewModel.ComplimentSingleton
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NavigationActivity : AppCompatActivity() {
     lateinit var binding: ActivityNavigationBinding
