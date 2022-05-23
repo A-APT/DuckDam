@@ -6,15 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.FragmentDrawResultBinding
 import com.aligatorapt.duckdam.view.activity.NavigationActivity
 import com.aligatorapt.duckdam.view.activity.VendingActivity
 import com.aligatorapt.duckdam.view.dialog.ModalDialog
+import com.aligatorapt.duckdam.viewModel.VendingViewModel
 
 class DrawResultFragment : Fragment() {
     private var _binding: FragmentDrawResultBinding? = null
     private val binding: FragmentDrawResultBinding get() = _binding!!
+    private val model: VendingViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +36,21 @@ class DrawResultFragment : Fragment() {
     private fun init(){
         val mActivity = activity as VendingActivity
         binding.apply {
+            model.slotResult.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    stickerName.text = "안녕? 난 ${resources.getStringArray(R.array.sticker)[it.stickerNum]}!"
+                    stickerImg.setImageResource(resources.obtainTypedArray(R.array.stickerImg).getResourceId(it.stickerNum, 0))
+                }
+            })
             showContentBtn.setOnClickListener {
                 //다이얼로그
                 val bundle = Bundle()
                 bundle.putString("title", "오늘의 칭찬")
-                bundle.putString("message", "나무는 얼마나 땅 깊숙이 뿌리를 박고 있을까요? 저 나무도 바람에 흔들리는데 사람 마음이 흔들리는 건 당연한 것입니다. 오늘도 수고했어요:)")
+                model.slotResult.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        bundle.putString("message", it.message)
+                    }
+                })
 
                 val modalDialog = ModalDialog()
                 modalDialog.arguments = bundle
