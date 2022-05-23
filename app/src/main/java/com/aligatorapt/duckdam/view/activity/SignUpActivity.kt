@@ -27,7 +27,7 @@ import java.util.regex.Pattern
 
 class SignUpActivity: AppCompatActivity() {
     lateinit var binding: ActivitySignupBinding
-    private var arr = booleanArrayOf(false,false,false,false,false,false)
+    private var arr = booleanArrayOf(false,false,false,false,false)
     private val PROFILE_IMAGE = 100
     private var isActivateBtn = false
 
@@ -38,42 +38,12 @@ class SignUpActivity: AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        EmailCode()
+        emailCode()
         check()
         register()
     }
 
-    private fun register() {
-        binding.apply {
-            signupFinal.setOnClickListener {
-                if(isActivateBtn){
-                    model.registser(
-                        RegisterDto(
-                            name = signupNickname.text.toString(),
-                            password = signupPwEt.text.toString(),
-                            email = model.email.value.toString(),
-                            profile = model.profile.value
-                        ), object : RegisterCallback {
-                            override fun registerCallback(flag: Boolean, isNickname: Boolean) {
-                                if (flag) {
-                                    signupNicknameError.visibility = View.GONE
-                                    val intent = Intent(this@SignUpActivity,LoginActivity::class.java)
-                                    finish()
-                                    startActivity(intent)
-                                }else if(!flag && isNickname){
-                                    signupNicknameError.visibility = View.VISIBLE
-                                    arr[4] = false
-                                    setIsActivateBtn()
-                                }
-                            }
-                        }
-                    )
-                }
-            }
-        }
-    }
-
-    private fun EmailCode() {
+    private fun emailCode() {
         binding.apply {
             
             //인증코드 전송
@@ -168,6 +138,36 @@ class SignUpActivity: AppCompatActivity() {
         }
     }
 
+    private fun register() {
+        binding.apply {
+            signupFinal.setOnClickListener {
+                if(isActivateBtn){
+                    model.registser(
+                        RegisterDto(
+                            name = signupNickname.text.toString(),
+                            password = signupPwEt.text.toString(),
+                            email = model.email.value.toString(),
+                            profile = model.profile.value
+                        ), object : RegisterCallback {
+                            override fun registerCallback(flag: Boolean, isNickname: Boolean) {
+                                if (flag) {
+                                    signupNicknameError.visibility = View.GONE
+                                    val intent = Intent(this@SignUpActivity,LoginActivity::class.java)
+                                    finish()
+                                    startActivity(intent)
+                                }else if(!flag && isNickname){
+                                    signupNicknameError.visibility = View.VISIBLE
+                                    arr[4] = false
+                                    setIsActivateBtn()
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PROFILE_IMAGE) {
@@ -187,15 +187,12 @@ class SignUpActivity: AppCompatActivity() {
                             model.setProfile(bitmap.toString())
                             binding.signupImage.setImageBitmap(bitmap)
                         }
-                        arr[5] = true
                     }
                 } catch (e: Exception) {
-                    arr[5] = false
                     e.printStackTrace()
                 }
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show()
-                arr[5] = false
+                Toast.makeText(this, "사진 선택이 취소되었습니다.", Toast.LENGTH_LONG).show()
             }
         }
         setIsActivateBtn()
@@ -221,7 +218,7 @@ class SignUpActivity: AppCompatActivity() {
     }
 
     private fun setIsActivateBtn(){
-        Log.e("SETISACTIVE",arr[0].toString()+arr[1].toString()+arr[2].toString()+arr[3].toString()+arr[4].toString()+arr[5].toString())
+        Log.e("SETISACTIVE",arr[0].toString()+arr[1].toString()+arr[2].toString()+arr[3].toString()+arr[4].toString())
         isActivateBtn = true
         for(element in arr){
             if(!element){
