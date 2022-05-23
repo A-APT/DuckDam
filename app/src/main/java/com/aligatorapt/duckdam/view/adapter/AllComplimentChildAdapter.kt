@@ -1,17 +1,20 @@
 package com.aligatorapt.duckdam.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.RowAllComplimentChildBinding
+import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
 import com.aligatorapt.duckdam.view.data.AllComplimentChild
 
-class AllComplimentChildAdapter (var items:ArrayList<AllComplimentChild>)
+class AllComplimentChildAdapter (var items:ArrayList<ComplimentResponseDto>, val context: Context)
     : RecyclerView.Adapter<AllComplimentChildAdapter.MyViewHolder>(){
 
     interface OnItemClickListener{
-        fun OnItemClick(holder: MyViewHolder, view: View, data: AllComplimentChild, position: Int)
+        fun OnItemClick(holder: MyViewHolder, view: View, data: ComplimentResponseDto, position: Int)
     }
 
     var itemClickListener:OnItemClickListener?= null
@@ -24,7 +27,7 @@ class AllComplimentChildAdapter (var items:ArrayList<AllComplimentChild>)
         }
     }
 
-    fun setData(newData:ArrayList<AllComplimentChild>){
+    fun setData(newData:ArrayList<ComplimentResponseDto>){
         items.clear()
         items.addAll(newData)
         notifyDataSetChanged()
@@ -41,7 +44,7 @@ class AllComplimentChildAdapter (var items:ArrayList<AllComplimentChild>)
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.binding.apply {
-            sticker.setImageResource(items[position].sticker)
+            sticker.setImageResource(context.resources.obtainTypedArray(R.array.stickerImg).getResourceId(items[position].stickerNum, 0))
         }
     }
 }
