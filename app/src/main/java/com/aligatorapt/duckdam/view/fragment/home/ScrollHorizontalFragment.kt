@@ -143,7 +143,7 @@ class ScrollHorizontalFragment : Fragment() {
     private fun setContent(item: ComplimentResponseDto){
         binding.apply {
             content.text = item.message
-            nickname.text = item.fromId.toString()  //Todo change nickname
+            nickname.text = item.fromName
         }
     }
 

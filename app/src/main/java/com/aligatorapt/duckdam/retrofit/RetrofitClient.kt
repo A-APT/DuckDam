@@ -9,9 +9,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import com.aligatorapt.duckdam.retrofit.`interface`.ComplimentInterface
+import com.aligatorapt.duckdam.retrofit.`interface`.FriendInterface
 
 object RetrofitClient {
-    private const val BASE_URL:String = "http://192.168.219.103:8080"
+    private const val BASE_URL:String = "http://172.30.1.28:8080"
 
     private val loggingInterceptor = HttpLoggingInterceptor()
 
@@ -43,4 +44,7 @@ object RetrofitClient {
         retrofit.create(ComplimentInterface::class.java)
     }
 
+    val FRIEND_INTERFACE_SERVICE: FriendInterface by lazy{
+        retrofit.create(FriendInterface::class.java)
+    }
 }

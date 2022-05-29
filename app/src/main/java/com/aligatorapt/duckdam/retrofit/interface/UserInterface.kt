@@ -24,16 +24,16 @@ interface UserInterface {
         @Body refreshToken: String
     ): Call<LoginResponseDto>
 
-    @POST("/users/{query}")
+    @GET("/users/{query}")
     fun searchByName(
         @HeaderMap httpHeaders: HashMap<String, String>,
         @Path("query") query: String
-    ): Call<List<UserResponseDto>>
+    ): Call<ArrayList<UserResponseDto>>
 
-    @POST("/user/stickers")
+    @GET("/user/stickers")
     fun getStickerList(
         @HeaderMap httpHeaders: HashMap<String, String>
-    ): Call<List<Boolean>>
+    ): Call<ArrayList<Boolean>>
 
     @GET("/user/slot")
     fun isEligibleForSlot(

@@ -3,8 +3,10 @@ package com.aligatorapt.duckdam.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aligatorapt.duckdam.dto.compliment.ComplimentRequestDto
 import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
 import com.aligatorapt.duckdam.model.ComplimentModel
+import com.aligatorapt.duckdam.retrofit.callback.ApiCallback
 import com.aligatorapt.duckdam.retrofit.callback.ComplimentsCallback
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +39,22 @@ class ComplimentViewModel: ViewModel() {
         viewModelScope.launch {
             withContext(dispatcher){
                 ComplimentModel.findCompliments(callback)
+            }
+        }
+    }
+
+    fun generateCompliment(_data: ComplimentRequestDto, callback: ApiCallback){
+        viewModelScope.launch {
+            withContext(dispatcher){
+                ComplimentModel.generateCompliment(_data, callback)
+            }
+        }
+    }
+
+    fun findComplimentsByFromAndTo(_toId: Long, callback: ComplimentsCallback){
+        viewModelScope.launch {
+            withContext(dispatcher){
+                ComplimentModel.findComplimentsByFromAndTo(_toId, callback)
             }
         }
     }

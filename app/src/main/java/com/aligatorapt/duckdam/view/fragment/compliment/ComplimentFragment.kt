@@ -1,6 +1,5 @@
 package com.aligatorapt.duckdam.view.fragment.compliment
 
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,22 +7,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.FragmentComplimentBinding
 import com.aligatorapt.duckdam.view.activity.NavigationActivity
-import com.aligatorapt.duckdam.view.data.SelectList
 import com.aligatorapt.duckdam.view.dialog.FriendListDialog
 import android.text.Editable
 
 import android.text.TextWatcher
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
+import com.aligatorapt.duckdam.dto.compliment.ComplimentRequestDto
+import com.aligatorapt.duckdam.dto.user.UserResponseDto
+import com.aligatorapt.duckdam.retrofit.callback.ApiCallback
+import com.aligatorapt.duckdam.viewModel.ComplimentSingleton
 
 
 class ComplimentFragment : Fragment() {
     private var _binding: FragmentComplimentBinding? = null
     private val binding: FragmentComplimentBinding get() = _binding!!
+
+    private val model = ComplimentSingleton.getInstance()
+    var stickerNum = 0
+    var toId = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +41,10 @@ class ComplimentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if(arguments != null){
-            val selectList = arguments?.getSerializable("selectList") as SelectList
-            Log.e("SELECTLIST",selectList.toString())
-            binding.receiver.text = selectList.name
+            val selectFriend = arguments?.getSerializable("selectFriend") as UserResponseDto
+            Log.e("selectFriend",selectFriend.toString())
+            binding.receiver.text = selectFriend.name
+            toId = selectFriend.uid
         }
 
         init()
@@ -80,12 +85,9 @@ class ComplimentFragment : Fragment() {
                 bundle.putString("title", "스티커 고르기")
                 friendListDialog.arguments = bundle
                 friendListDialog.itemClickListener = object : FriendListDialog.OnItemClickListener {
-                    override fun OnItemClick(isSticker: Boolean, data: SelectList) {
-                        if (isSticker) {
-                            sticker.setImageResource(data.sticker)
-                        } else {
-                            receiver.text = data.name
-                        }
+                    override fun OnItemClick(isSticker: Boolean, data: UserResponseDto) {
+                        stickerNum = data.profile!!.toInt()
+                        sticker.setImageResource(resources.obtainTypedArray(R.array.stickerImg).getResourceId(stickerNum,0))
                     }
                 }
                 friendListDialog.show(mActivity.supportFragmentManager, "FriendListDialog")
@@ -96,12 +98,9 @@ class ComplimentFragment : Fragment() {
                 bundle.putString("title", "친구 목록")
                 friendListDialog.arguments = bundle
                 friendListDialog.itemClickListener = object : FriendListDialog.OnItemClickListener {
-                    override fun OnItemClick(isSticker: Boolean, data: SelectList) {
-                        if (isSticker) {
-                            sticker.setImageResource(data.sticker)
-                        } else {
-                            receiver.text = data.name
-                        }
+                    override fun OnItemClick(isSticker: Boolean, data: UserResponseDto) {
+                        receiver.text = data.name
+                        toId = data.uid
                     }
                 }
                 friendListDialog.show(mActivity.supportFragmentManager, "FriendListDialog")
@@ -110,10 +109,23 @@ class ComplimentFragment : Fragment() {
             sendBtn.setOnClickListener {
 
                 if (receiver.text != "???" && sticker.drawable.constantState!! != ContextCompat.getDrawable(requireContext(), R.drawable.big_image)?.constantState && content.text.toString() != "") {
-                    Toast.makeText(requireContext(), "칭찬이 전송되었습니다!", Toast.LENGTH_SHORT).show()
-                    receiver.text = "???"
-                    sticker.setImageResource(R.drawable.big_image)
-                    content.setText("")
+                    val complimentRequestDto = ComplimentRequestDto(
+                        toId = toId,
+                        stickerNum = stickerNum,
+                        message = content.text.toString()
+                    )
+                    model?.generateCompliment(_data = complimentRequestDto, object : ApiCallback{
+                        override fun apiCallback(flag: Boolean) {
+                            if(flag){
+                                Toast.makeText(requireContext(), "칭찬이 전송되었습니다!", Toast.LENGTH_SHORT).show()
+                                receiver.text = "???"
+                                sticker.setImageResource(R.drawable.big_image)
+                                content.setText("")
+                            }else{
+                                Toast.makeText(requireContext(), "전송에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    })
                 }else {
                     Toast.makeText(requireContext(), "친구와 스티커, 칭찬을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }

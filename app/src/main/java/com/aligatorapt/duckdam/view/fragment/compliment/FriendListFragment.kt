@@ -9,25 +9,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.FragmentFriendlistBinding
 import com.aligatorapt.duckdam.view.activity.FriendListDetailActivity
 import com.aligatorapt.duckdam.view.activity.NavigationActivity
-import com.aligatorapt.duckdam.view.adapter.SelectListAdapter
-import com.aligatorapt.duckdam.view.data.SelectList
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
-
-import androidx.core.content.ContextCompat.getSystemService
-
-
-
+import com.aligatorapt.duckdam.dto.user.UserResponseDto
+import com.aligatorapt.duckdam.retrofit.callback.ApiCallback
+import com.aligatorapt.duckdam.retrofit.callback.UserCallback
+import com.aligatorapt.duckdam.retrofit.callback.UserListCallback
+import com.aligatorapt.duckdam.view.adapter.FriendListAdapter
+import com.aligatorapt.duckdam.viewModel.FriendSingleton
 
 class FriendListFragment : Fragment() {
     private var _binding: FragmentFriendlistBinding? = null
     private val binding: FragmentFriendlistBinding get() = _binding!!
     private val DETAIL = 100
+
+    private val friendmodel = FriendSingleton.getInstance()
+    lateinit var selectFriend: UserResponseDto
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,31 +45,72 @@ class FriendListFragment : Fragment() {
     private fun init(){
         binding.apply {
 
-            friendnum.text = setFriendList().size.toString()
-
             val linearLayoutManager = LinearLayoutManager(requireContext())
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             friendlistRv.layoutManager = linearLayoutManager
-            val selectAdapter = SelectListAdapter(requireContext(),setFriendList(),true)
-            selectAdapter.itemClickListener = object: SelectListAdapter.OnItemClickListener{
-                override fun OnItemClick(data: SelectList, position: Int) {
+            val selectAdapter = FriendListAdapter(requireContext(), arrayListOf(),friendmodel)
+
+            selectAdapter.itemClickListener = object: FriendListAdapter.OnItemClickListener{
+                override fun OnItemClick(data: UserResponseDto, position: Int) {
                     val intent = Intent(requireContext(), FriendListDetailActivity::class.java)
                     intent.putExtra("data",data)
+                    selectFriend = data
                     startActivityForResult(intent, DETAIL)
                 }
-                override fun OnAddClick(data: SelectList, position: Int) {
-                    Toast.makeText(requireContext(),"친구로 추가되었습니다!",Toast.LENGTH_SHORT).show()
+                override fun OnAddClick(data: UserResponseDto, position: Int) {
+                    friendmodel?.followFriend(
+                        _targetId = data.uid,
+                        object: ApiCallback{
+                            override fun apiCallback(flag: Boolean) {
+                                if(flag){
+                                    Toast.makeText(requireContext(),"친구로 추가되었습니다!",Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        })
                 }
             }
             friendlistRv.adapter = selectAdapter
+
+            friendmodel?.findMyFriend(object: UserCallback{
+                override fun userCallback(flag: Boolean, data: ArrayList<UserResponseDto>?) {
+                    if(flag){
+                        if(data!!.isNotEmpty()){
+                            friendmodel.setFriend(data)
+                            selectAdapter.setData(data,true)
+                        }else{
+                            emptyResult.visibility = View.VISIBLE
+                            friendlistRv.visibility = View.GONE
+                        }
+                        friendnum.text = data.size.toString()
+                    }
+                }
+            })
 
             friendlistSearchIv.setOnClickListener {
                 //검색 시작
                 val imm: InputMethodManager? = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
                 imm!!.hideSoftInputFromWindow(friendlistSearchEt.getWindowToken(), 0);
                 val searchtext = friendlistSearchEt.text.toString()
-                if(searchtext != "")selectAdapter.setData(setSearchFriendList())
-                else selectAdapter.setData(setFriendList())
+                friendmodel?.searchByName(searchtext, object: UserListCallback{
+                    override fun userListCallback(
+                        flag: Boolean,
+                        data: ArrayList<UserResponseDto>?
+                    ) {
+                        if(flag){
+                            if(data!!.isNotEmpty()){
+                                emptyResult.visibility = View.GONE
+                                friendlistRv.visibility - View.VISIBLE
+                                selectAdapter.setData(data, false)
+                            }
+                            else{
+                                emptyResult.visibility = View.VISIBLE
+                                textView.text = "검색된 친구가 없어요"
+                                textView2.visibility = View.GONE
+                                friendlistRv.visibility = View.GONE
+                            }
+                        }
+                    }
+                })
             }
         }
     }
@@ -78,11 +119,9 @@ class FriendListFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(resultCode == RESULT_OK){
-            val selectList = data?.getSerializableExtra("selectList")
-
             val mActivity = activity as NavigationActivity
             val bundle = Bundle()
-            bundle.putSerializable("selectList",selectList)
+            bundle.putSerializable("selectFriend",selectFriend)
             val complimentFragment = ComplimentFragment()
             complimentFragment.arguments = bundle
             mActivity.changeFragment(complimentFragment)
@@ -92,85 +131,5 @@ class FriendListFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    private fun setFriendList(): ArrayList<SelectList> {
-        return arrayListOf(
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "어깨피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "허리피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "맛있는피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "어깨피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "허리피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "맛있는피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "어깨피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "허리피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "맛있는피자",
-                isAdded = true
-            )
-        )
-    }
-
-    private fun setSearchFriendList(): ArrayList<SelectList> {
-        return arrayListOf(
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "어깨피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "허리피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "맛있는피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "파인애플피자",
-                isAdded = false
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "민트초코피자",
-                isAdded = false
-            )
-        )
     }
 }

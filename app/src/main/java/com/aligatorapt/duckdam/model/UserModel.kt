@@ -5,15 +5,14 @@ import com.aligatorapt.duckdam.dto.user.LoginRequestDto
 import com.aligatorapt.duckdam.dto.user.LoginResponseDto
 import com.aligatorapt.duckdam.dto.user.RegisterDto
 import com.aligatorapt.duckdam.retrofit.RetrofitClient
-import com.aligatorapt.duckdam.retrofit.callback.ApiCallback
-import com.aligatorapt.duckdam.retrofit.callback.RegisterCallback
 import com.aligatorapt.duckdam.sharedpreferences.MyApplication
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.aligatorapt.duckdam.dto.ErrorResponseDto
-import com.aligatorapt.duckdam.retrofit.callback.BooleanCallback
+import com.aligatorapt.duckdam.dto.user.UserResponseDto
+import com.aligatorapt.duckdam.retrofit.callback.*
 import com.aligatorapt.duckdam.sharedpreferences.ErrorUtil
 
 object UserModel{
@@ -82,6 +81,52 @@ object UserModel{
 
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 callback.booleanCallback(false, null)
+            }
+        })
+    }
+
+    fun searchByName(_query: String, callback: UserListCallback){
+        val headers = HashMap<String, String>()
+        val userToken = MyApplication.prefs.getString("token", "notExist")
+        headers["Authorization"] = "Bearer $userToken"
+
+        RetrofitClient.USER_INTERFACE_SERVICE.searchByName(
+            httpHeaders = headers,
+            query = _query).enqueue(object :Callback<ArrayList<UserResponseDto>>{
+            override fun onResponse(call: Call<ArrayList<UserResponseDto>>, response: Response<ArrayList<UserResponseDto>>) {
+
+                Log.d("Response::", "Response::" + response.body().toString())
+                if(response.isSuccessful){
+                    callback.userListCallback(true, response.body())
+                }else{
+                    callback.userListCallback(false,null)
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<UserResponseDto>>, t: Throwable) {
+                callback.userListCallback(false, null)
+            }
+        })
+    }
+
+    fun getStickerList(callback: BooleanListCallback){
+        val headers = HashMap<String, String>()
+        val userToken = MyApplication.prefs.getString("token", "notExist")
+        headers["Authorization"] = "Bearer $userToken"
+
+        RetrofitClient.USER_INTERFACE_SERVICE.getStickerList(httpHeaders = headers).enqueue(object: Callback<ArrayList<Boolean>>{
+            override fun onResponse(call: Call<ArrayList<Boolean>>, response: Response<ArrayList<Boolean>>) {
+
+                Log.d("Response::", "Response::" + response.body().toString())
+                if(response.isSuccessful){
+                    callback.booleanlistCallback(true, response.body())
+                }else{
+                    callback.booleanlistCallback(false, null)
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Boolean>>, t: Throwable) {
+                callback.booleanlistCallback(false, null)
             }
         })
     }

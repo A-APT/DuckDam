@@ -1,10 +1,12 @@
 package com.aligatorapt.duckdam.view.activity
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -12,16 +14,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.ActivitySignupBinding
 import com.aligatorapt.duckdam.dto.auth.EmailTokenDto
 import com.aligatorapt.duckdam.dto.user.RegisterDto
-import com.aligatorapt.duckdam.model.UserModel.register
 import com.aligatorapt.duckdam.retrofit.callback.ApiCallback
 import com.aligatorapt.duckdam.retrofit.callback.RegisterCallback
 import com.aligatorapt.duckdam.viewModel.RegisterViewModel
+import java.io.ByteArrayOutputStream
 import java.lang.Exception
 import java.util.regex.Pattern
 
@@ -177,7 +177,11 @@ class SignUpActivity: AppCompatActivity() {
                     currentImageUri?.let {
                         if (Build.VERSION.SDK_INT < 28) {
                             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, currentImageUri)
-                            model.setProfile(bitmap.toString())
+                            val profileByteArray = ByteArrayOutputStream()
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 2, profileByteArray)
+                            val byte_data = profileByteArray.toByteArray()
+
+                            model.setProfile(Base64.encodeToString(byte_data, Base64.DEFAULT))
                             binding.signupImage.setImageBitmap(bitmap)
                             //string -> bytearray
                             // bytearray.contentToString()

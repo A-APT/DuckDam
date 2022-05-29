@@ -1,19 +1,22 @@
 package com.aligatorapt.duckdam.view.activity
 
-import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.ActivityFriendlistDetailBinding
+import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
+import com.aligatorapt.duckdam.dto.user.UserResponseDto
+import com.aligatorapt.duckdam.retrofit.callback.ComplimentsCallback
 import com.aligatorapt.duckdam.view.adapter.FriendListDetailAdapter
-import com.aligatorapt.duckdam.view.data.AllComplimentChild
-import com.aligatorapt.duckdam.view.data.SelectList
-import com.aligatorapt.duckdam.view.fragment.compliment.ComplimentFragment
+import com.aligatorapt.duckdam.viewModel.ComplimentSingleton
 
 class FriendListDetailActivity: AppCompatActivity() {
     lateinit var binding: ActivityFriendlistDetailBinding
+    private val model = ComplimentSingleton.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,85 +28,53 @@ class FriendListDetailActivity: AppCompatActivity() {
 
     private fun init(){
         //친구 이름으로 칭찬내역 찾기
-        val selectList = intent.getSerializableExtra("data") as SelectList
+        val friend = intent.getSerializableExtra("data") as UserResponseDto
 
         binding.apply {
-            fldetailName.text = selectList.name
-            fldetailSticker.setImageResource(selectList.sticker)
             val linearLayoutManager = LinearLayoutManager(applicationContext)
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             fldetailRv.layoutManager = linearLayoutManager
-            val friendListDetailAdapter = FriendListDetailAdapter(applicationContext, setList())
+            val friendListDetailAdapter = FriendListDetailAdapter(applicationContext, arrayListOf())
             fldetailRv.adapter = friendListDetailAdapter
+
+            fldetailName.text = friend.name
+            if(friend.profile != null){
+                val decodedImageBytes: ByteArray = Base64.decode(friend.profile, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(decodedImageBytes, 0, decodedImageBytes.size)
+                fldetailSticker.setImageBitmap(bitmap)
+            }else {
+                fldetailSticker.setImageResource(R.drawable.small_sample)
+            }
+
+            model?.findComplimentsByFromAndTo(
+                _toId = friend.uid,
+                object: ComplimentsCallback{
+                    override fun complimentsCallback(
+                        flag: Boolean,
+                        data: ArrayList<ComplimentResponseDto>?
+                    ) {
+                        if(flag){
+                            if(data!!.isNotEmpty()){
+                                emptyResult.visibility = View.GONE
+                                fldetailRv.visibility = View.VISIBLE
+                                friendListDetailAdapter.setData(data)
+                            }else{
+                                emptyResult.visibility = View.VISIBLE
+                                fldetailRv.visibility = View.GONE
+
+                            }
+                        }
+                    }
+            })
 
             fldetailBackTv.setOnClickListener {
                 finish()
             }
             fldetailCompliment.setOnClickListener {
-                intent.putExtra("selectList",selectList)
                 setResult(RESULT_OK,intent)
                 finish()
             }
         }
 
-    }
-
-    private fun setList(): ArrayList<AllComplimentChild> {
-        return arrayListOf(
-            AllComplimentChild(
-                sticker = R.drawable.sticker06,
-                date = "2022.01.02",
-                content = "오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)",
-                from = "어깨피자"
-            ),
-            AllComplimentChild(
-                sticker = R.drawable.sticker07,
-                date = "2022.01.02",
-                content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
-                from = "어깨피자"
-            ),
-            AllComplimentChild(
-                sticker = R.drawable.sticker08,
-                date = "2022.01.20",
-                content = "세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
-                from = "어깨피자"
-            ),
-            AllComplimentChild(
-                sticker = R.drawable.sticker06,
-                date = "2022.01.02",
-                content = "오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)",
-                from = "어깨피자"
-            ),
-            AllComplimentChild(
-                sticker = R.drawable.sticker07,
-                date = "2022.01.02",
-                content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
-                from = "어깨피자"
-            ),
-            AllComplimentChild(
-                sticker = R.drawable.sticker08,
-                date = "2022.01.20",
-                content = "세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
-                from = "어깨피자"
-            ),
-            AllComplimentChild(
-                sticker = R.drawable.sticker06,
-                date = "2022.01.02",
-                content = "오늘 하루 도움을 줘서 너무 고마워! 네가 없었으면 우리 팀은 이기지 못했을 거야 :)",
-                from = "어깨피자"
-            ),
-            AllComplimentChild(
-                sticker = R.drawable.sticker07,
-                date = "2022.01.02",
-                content = "너무 고마운데 이걸 말로 어떻게 길게 표현하지 세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
-                from = "어깨피자"
-            ),
-            AllComplimentChild(
-                sticker = R.drawable.sticker08,
-                date = "2022.01.20",
-                content = "세상에서 제일 긴 말로 너를 칭찬하고 싶은데 이정도면 될까?",
-                from = "어깨피자"
-            ),
-        )
     }
 }
