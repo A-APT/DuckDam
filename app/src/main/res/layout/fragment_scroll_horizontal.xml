@@ -55,10 +55,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/showCompliment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/sub2"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,10 +122,10 @@
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewpager"
-                    android:padding="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:padding="30dp" />
             </FrameLayout>
 
             <ImageView
@@ -143,7 +145,6 @@
 
             <TextView
                 android:id="@+id/content"
-                android:scrollbars="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="260dp"
                 android:background="@drawable/white_box"
@@ -151,6 +152,7 @@
                 android:paddingHorizontal="32dp"
                 android:paddingTop="64dp"
                 android:paddingBottom="32dp"
+                android:scrollbars="vertical"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -165,5 +167,41 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emptyResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/sub2"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/empty_result" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="아직 칭찬이 오지 않았어요."
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="먼저 칭찬하는 것은 어떨까요?"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

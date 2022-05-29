@@ -13,11 +13,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.aligatorapt.duckdam.dto.ErrorResponseDto
+import com.aligatorapt.duckdam.retrofit.callback.BooleanCallback
 import com.aligatorapt.duckdam.sharedpreferences.ErrorUtil
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import retrofit2.Converter
-
 
 object UserModel{
     fun register( _userInfo: RegisterDto, callback: RegisterCallback){
@@ -63,6 +60,28 @@ object UserModel{
             override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
                 Log.d("onFailure::", "onFailure: $t")
                 callback.apiCallback(false)
+            }
+        })
+    }
+
+    fun isEligibleForSlot(callback: BooleanCallback){
+        val headers = HashMap<String, String>()
+        val userToken = MyApplication.prefs.getString("token", "notExist")
+        headers["Authorization"] = "Bearer $userToken"
+
+        RetrofitClient.USER_INTERFACE_SERVICE.isEligibleForSlot(
+                httpHeaders = headers
+            ).enqueue(object :Callback<Boolean>{
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                if(response.isSuccessful) {
+                    callback.booleanCallback(true, response.body())
+                }else{
+                    callback.booleanCallback(false, null)
+                }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                callback.booleanCallback(false, null)
             }
         })
     }
