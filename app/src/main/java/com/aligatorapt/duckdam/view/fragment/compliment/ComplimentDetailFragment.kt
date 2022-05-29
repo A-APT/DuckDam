@@ -49,9 +49,14 @@ class ComplimentDetailFragment : Fragment() {
                     )
                     date.text = dateFormat.format(it.date)
                     content.text = it.message
-                    from.text = "${it.fromId}가" //Todo change nickname
-                    complimentBtn.text = "${it.fromId}에게 칭찬하러 가기"
-                    addFriendBtn.text = "${it.fromId} 친구 추가하기"
+                    from.text = "From ${it.fromName}"
+
+                    if(it.fromName == "덕담"){ //Todo if already follow
+                        complimentBtn.visibility = View.GONE
+                        addFriendBtn.visibility = View.GONE
+                    }
+                    complimentBtn.text = "${it.fromName}에게 칭찬하러 가기"
+                    addFriendBtn.text = "${it.fromName} 친구 추가하기"
                 }
             })
 
