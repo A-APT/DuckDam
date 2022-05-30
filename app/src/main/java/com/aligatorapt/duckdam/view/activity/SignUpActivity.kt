@@ -147,7 +147,7 @@ class SignUpActivity: AppCompatActivity() {
                             name = signupNickname.text.toString(),
                             password = signupPwEt.text.toString(),
                             email = model.email.value.toString(),
-                            profile = model.profile.value
+                            profile = ByteArray(1)
                         ), object : RegisterCallback {
                             override fun registerCallback(flag: Boolean, isNickname: Boolean) {
                                 if (flag) {
@@ -177,18 +177,22 @@ class SignUpActivity: AppCompatActivity() {
                     currentImageUri?.let {
                         if (Build.VERSION.SDK_INT < 28) {
                             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, currentImageUri)
-                            val profileByteArray = ByteArrayOutputStream()
+                            val profileByteArray: ByteArrayOutputStream? = ByteArrayOutputStream()
                             bitmap.compress(Bitmap.CompressFormat.PNG, 2, profileByteArray)
-                            val byte_data = profileByteArray.toByteArray()
-
-                            model.setProfile(Base64.encodeToString(byte_data, Base64.DEFAULT))
+                            if(profileByteArray != null){
+                                val bytes = profileByteArray.toByteArray()
+                                model.setProfile(bytes)
+                            }
                             binding.signupImage.setImageBitmap(bitmap)
-                            //string -> bytearray
-                            // bytearray.contentToString()
                         } else {
                             val source = ImageDecoder.createSource(contentResolver, currentImageUri)
                             val bitmap = ImageDecoder.decodeBitmap(source)
-                            model.setProfile(bitmap.toString())
+                            val profileByteArray: ByteArrayOutputStream? = ByteArrayOutputStream()
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 2, profileByteArray)
+                            if(profileByteArray != null){
+                                val bytes = profileByteArray.toByteArray()
+                                model.setProfile(bytes)
+                            }
                             binding.signupImage.setImageBitmap(bitmap)
                         }
                     }

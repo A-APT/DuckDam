@@ -106,7 +106,7 @@
                 android:id="@+id/signup_code"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:inputType="text|textNoSuggestions"
+                android:inputType="number"
                 android:hint="인증 코드를 입력하세요."
                 android:textSize="14sp"
                 android:textColor="@color/black"

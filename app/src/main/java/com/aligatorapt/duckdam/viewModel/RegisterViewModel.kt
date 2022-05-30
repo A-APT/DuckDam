@@ -19,13 +19,13 @@ class RegisterViewModel: ViewModel() {
     private var dispatcher: CoroutineDispatcher = Dispatchers.IO
 
     val email = MutableLiveData<String>()
-    val profile = MutableLiveData<String?>()
+    val profile = MutableLiveData<ByteArray?>()
 
     fun setEmail(_email: String){
         email.value = _email
     }
 
-    fun setProfile(_profile: String){
+    fun setProfile(_profile: ByteArray){
         profile.value = _profile
     }
 
