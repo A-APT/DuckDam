@@ -5,5 +5,5 @@ data class LoginResponseDto (
     val refreshToken: String,
     val uid: Long,
     val name: String,
-    val profile: ByteArray?,
+    val profile: ByteArray?
 )

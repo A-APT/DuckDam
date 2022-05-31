@@ -1,5 +1,6 @@
 package com.aligatorapt.duckdam.model
 
+import android.util.Base64
 import android.util.Log
 import com.aligatorapt.duckdam.dto.user.LoginRequestDto
 import com.aligatorapt.duckdam.dto.user.LoginResponseDto
@@ -14,8 +15,11 @@ import com.aligatorapt.duckdam.dto.ErrorResponseDto
 import com.aligatorapt.duckdam.dto.user.UserResponseDto
 import com.aligatorapt.duckdam.retrofit.callback.*
 import com.aligatorapt.duckdam.sharedpreferences.ErrorUtil
+import com.aligatorapt.duckdam.viewModel.LoginSingleton
 
 object UserModel{
+    private val model = LoginSingleton.getInstance()
+
     fun register( _userInfo: RegisterDto, callback: RegisterCallback){
         RetrofitClient.USER_INTERFACE_SERVICE.register(_userInfo).enqueue(object: Callback<ResponseBody> {
             override fun onResponse(
@@ -51,6 +55,13 @@ object UserModel{
                 if(response.isSuccessful){
                     MyApplication.prefs.setString("token", response.body()!!.token)
                     MyApplication.prefs.setString("refreshToken", response.body()!!.refreshToken)
+                    val profile = Base64.encodeToString(response.body()!!.profile, Base64.DEFAULT)
+
+                    model?.setUser(UserResponseDto(
+                        uid = response.body()!!.uid,
+                        name = response.body()!!.name,
+                        profile = profile
+                    ))
                     callback.apiCallback(true)
                 }else{
                     callback.apiCallback(false)

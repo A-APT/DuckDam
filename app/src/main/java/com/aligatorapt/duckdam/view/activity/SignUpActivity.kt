@@ -6,7 +6,6 @@ import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -147,7 +146,7 @@ class SignUpActivity: AppCompatActivity() {
                             name = signupNickname.text.toString(),
                             password = signupPwEt.text.toString(),
                             email = model.email.value.toString(),
-                            profile = ByteArray(1)
+                            profile = model.profile.value
                         ), object : RegisterCallback {
                             override fun registerCallback(flag: Boolean, isNickname: Boolean) {
                                 if (flag) {

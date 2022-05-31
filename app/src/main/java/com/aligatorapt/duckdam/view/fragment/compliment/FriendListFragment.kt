@@ -20,6 +20,7 @@ import com.aligatorapt.duckdam.retrofit.callback.UserCallback
 import com.aligatorapt.duckdam.retrofit.callback.UserListCallback
 import com.aligatorapt.duckdam.view.adapter.FriendListAdapter
 import com.aligatorapt.duckdam.viewModel.FriendSingleton
+import com.aligatorapt.duckdam.viewModel.LoginSingleton
 
 class FriendListFragment : Fragment() {
     private var _binding: FragmentFriendlistBinding? = null
@@ -27,6 +28,7 @@ class FriendListFragment : Fragment() {
     private val DETAIL = 100
 
     private val friendmodel = FriendSingleton.getInstance()
+    private val usermodel = LoginSingleton.getInstance()
     lateinit var selectFriend: UserResponseDto
 
     override fun onCreateView(
@@ -48,7 +50,8 @@ class FriendListFragment : Fragment() {
             val linearLayoutManager = LinearLayoutManager(requireContext())
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             friendlistRv.layoutManager = linearLayoutManager
-            val selectAdapter = FriendListAdapter(requireContext(), arrayListOf(),friendmodel)
+            val user = usermodel?.user!!.value
+            val selectAdapter = FriendListAdapter(requireContext(), arrayListOf(),friendmodel, user)
 
             selectAdapter.itemClickListener = object: FriendListAdapter.OnItemClickListener{
                 override fun OnItemClick(data: UserResponseDto, position: Int) {

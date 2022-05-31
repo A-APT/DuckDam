@@ -3,7 +3,6 @@ package com.aligatorapt.duckdam.view.adapter
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,8 @@ import com.aligatorapt.duckdam.viewModel.FriendViewModel
 class FriendListAdapter(
     val context: Context,
     var items: ArrayList<UserResponseDto>,
-    val viewModel: FriendViewModel?
+    val viewModel: FriendViewModel?,
+    val user: UserResponseDto?
 ) : RecyclerView.Adapter<FriendListAdapter.MyViewHolder>(){
 
     var isFriendPage: Boolean = true
@@ -46,7 +46,9 @@ class FriendListAdapter(
                 if (viewModel != null) {
                     if(viewModel.friends.value != null && viewModel.friends.value!!.contains(items[position])) {
                         rowAdd.visibility = View.GONE
-                    }else {
+                    } else if(viewModel.friends.value!!.contains(user)){    // TODO 자기 자신 잘 걸러지는지 확인
+                        rowAdd.visibility = View.GONE
+                    } else {
                         rowAdd.visibility = View.VISIBLE
                     }
                 }
