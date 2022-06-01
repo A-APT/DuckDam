@@ -109,7 +109,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/friendlist_howmany_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

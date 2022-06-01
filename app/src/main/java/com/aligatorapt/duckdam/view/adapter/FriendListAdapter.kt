@@ -19,7 +19,7 @@ class FriendListAdapter(
     val user: UserResponseDto?
 ) : RecyclerView.Adapter<FriendListAdapter.MyViewHolder>(){
 
-    var isFriendPage: Boolean = true
+    var isFriendPage: Boolean = false
 
     interface OnItemClickListener{
         fun OnItemClick(data: UserResponseDto, position: Int)
@@ -46,14 +46,13 @@ class FriendListAdapter(
                 if (viewModel != null) {
                     if(viewModel.friends.value != null && viewModel.friends.value!!.contains(items[position])) {
                         rowAdd.visibility = View.GONE
-                    } else if(viewModel.friends.value!!.contains(user)){    // TODO 자기 자신 잘 걸러지는지 확인
+                    } else if(items[position] == user){
                         rowAdd.visibility = View.GONE
                     } else {
                         rowAdd.visibility = View.VISIBLE
                     }
                 }
             }else rowAdd.visibility = View.GONE
-            if(position == 0) rowView.visibility = View.GONE
 
             if(items[position].profile != null){
                 val decodedImageBytes: ByteArray = Base64.decode(items[position].profile, Base64.DEFAULT)
@@ -64,18 +63,20 @@ class FriendListAdapter(
             }
             rowName.text = items[position].name
 
-            rowLayout.setOnClickListener {
-                itemClickListener?.OnItemClick(items[position], position)
-            }
-            rowAdd.setOnClickListener {
-                rowAdd.visibility = View.GONE
-                itemClickListener?.OnAddClick(items[position], position)
-            }
         }
     }
 
     override fun getItemCount(): Int = items.size
 
     inner class MyViewHolder(val binding: RowFriendlistBinding): RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.rowLayout.setOnClickListener {
+                itemClickListener?.OnItemClick(items[adapterPosition], adapterPosition)
+            }
+            binding.rowAdd.setOnClickListener {
+                binding.rowAdd.visibility = View.GONE
+                itemClickListener?.OnAddClick(items[adapterPosition], adapterPosition)
+            }
+        }
     }
 }

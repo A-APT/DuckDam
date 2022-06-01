@@ -30,6 +30,7 @@ class FriendListFragment : Fragment() {
     private val friendmodel = FriendSingleton.getInstance()
     private val usermodel = LoginSingleton.getInstance()
     lateinit var selectFriend: UserResponseDto
+    lateinit var selectAdapter: FriendListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +52,7 @@ class FriendListFragment : Fragment() {
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             friendlistRv.layoutManager = linearLayoutManager
             val user = usermodel?.user!!.value
-            val selectAdapter = FriendListAdapter(requireContext(), arrayListOf(),friendmodel, user)
+            selectAdapter = FriendListAdapter(requireContext(), arrayListOf(),friendmodel, user)
 
             selectAdapter.itemClickListener = object: FriendListAdapter.OnItemClickListener{
                 override fun OnItemClick(data: UserResponseDto, position: Int) {
@@ -66,6 +67,7 @@ class FriendListFragment : Fragment() {
                         object: ApiCallback{
                             override fun apiCallback(flag: Boolean) {
                                 if(flag){
+                                    findMyFrined()
                                     Toast.makeText(requireContext(),"친구로 추가되었습니다!",Toast.LENGTH_SHORT).show()
                                 }
                             }
@@ -78,12 +80,12 @@ class FriendListFragment : Fragment() {
                 override fun userCallback(flag: Boolean, data: ArrayList<UserResponseDto>?) {
                     if(flag){
                         if(data!!.isNotEmpty()){
-                            friendmodel.setFriend(data)
-                            selectAdapter.setData(data,true)
+                            emptyResult.visibility = View.GONE
                         }else{
                             emptyResult.visibility = View.VISIBLE
-                            friendlistRv.visibility = View.GONE
                         }
+                        friendmodel.setFriend(data)
+                        selectAdapter.setData(data,true)
                         friendnum.text = data.size.toString()
                     }
                 }
@@ -102,15 +104,13 @@ class FriendListFragment : Fragment() {
                         if(flag){
                             if(data!!.isNotEmpty()){
                                 emptyResult.visibility = View.GONE
-                                friendlistRv.visibility - View.VISIBLE
-                                selectAdapter.setData(data, false)
                             }
                             else{
                                 emptyResult.visibility = View.VISIBLE
                                 textView.text = "검색된 친구가 없어요"
                                 textView2.visibility = View.GONE
-                                friendlistRv.visibility = View.GONE
                             }
+                            selectAdapter.setData(data, false)
                         }
                     }
                 })
@@ -118,9 +118,21 @@ class FriendListFragment : Fragment() {
         }
     }
 
+    private fun findMyFrined(){
+        binding.apply {
+            friendmodel?.findMyFriend(object: UserCallback{
+                override fun userCallback(flag: Boolean, data: ArrayList<UserResponseDto>?) {
+                    if(flag){
+                        friendmodel.setFriend(data)
+                        friendnum.text = data!!.size.toString()
+                    }
+                }
+            })
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if(resultCode == RESULT_OK){
             val mActivity = activity as NavigationActivity
             val bundle = Bundle()

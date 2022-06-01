@@ -55,8 +55,10 @@ object UserModel{
                 if(response.isSuccessful){
                     MyApplication.prefs.setString("token", response.body()!!.token)
                     MyApplication.prefs.setString("refreshToken", response.body()!!.refreshToken)
-                    val profile = Base64.encodeToString(response.body()!!.profile, Base64.DEFAULT)
-
+                    var profile : String? = ""
+                    profile = if(response.body()!!.profile != null){
+                        Base64.encodeToString(response.body()!!.profile, Base64.DEFAULT)
+                    }else null
                     model?.setUser(UserResponseDto(
                         uid = response.body()!!.uid,
                         name = response.body()!!.name,

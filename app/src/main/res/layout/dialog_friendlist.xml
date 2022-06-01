@@ -61,6 +61,15 @@
             tools:listitem="@layout/row_dialog"
             app:layout_constraintTop_toBottomOf="@id/layout"/>
 
+        <View
+            android:id="@+id/row_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/friendlist"/>
+
         <LinearLayout
             android:id="@+id/emptyResult"
             android:layout_width="match_parent"
