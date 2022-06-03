@@ -12,21 +12,25 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aligatorapt.duckdam.R
 import com.aligatorapt.duckdam.databinding.DialogFriendlistBinding
+import com.aligatorapt.duckdam.dto.user.UserResponseDto
+import com.aligatorapt.duckdam.retrofit.callback.BooleanListCallback
+import com.aligatorapt.duckdam.retrofit.callback.UserCallback
 import com.aligatorapt.duckdam.view.adapter.SelectListAdapter
-import com.aligatorapt.duckdam.view.data.SelectList
+import com.aligatorapt.duckdam.viewModel.FriendSingleton
+import com.aligatorapt.duckdam.viewModel.StickerSingleton
 
 
 class FriendListDialog: DialogFragment() {
     private var _binding: DialogFriendlistBinding ?= null
     private val binding : DialogFriendlistBinding get() = _binding!!
-
     private var header = ""
-    var array : ArrayList<SelectList> = setStickerList()
-    private var isSticker = false
     var itemClickListener: OnItemClickListener ?= null
 
+    private val model = FriendSingleton.getInstance()
+    private val stickermodel = StickerSingleton.getInstance()
+
     interface OnItemClickListener{
-        fun OnItemClick(isSticker: Boolean, data: SelectList)
+        fun OnItemClick(isSticker: Boolean, data: UserResponseDto)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,31 +52,64 @@ class FriendListDialog: DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            header = arguments?.getString("title").toString()
-            Log.e("HEADER",header.toString())
-            if(header == "스티커 고르기"){
-                isSticker = true
-                array = setStickerList()
-            } else if(header == "친구 목록"){
-                isSticker = false
-                array = setFriendList()
-            }
-            title.text = header
-
             val linearLayoutManager = LinearLayoutManager(requireContext())
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             friendlist.layoutManager = linearLayoutManager
-            val selectAdapter = SelectListAdapter(requireContext(),array,false)
+            val selectAdapter = SelectListAdapter(requireContext(),arrayListOf())
+
             selectAdapter.itemClickListener = object: SelectListAdapter.OnItemClickListener{
-                override fun OnItemClick(data: SelectList, position: Int) {
+                override fun OnItemClick(data: UserResponseDto, position: Int, isSticker: Boolean) {
                     itemClickListener?.OnItemClick(isSticker,data)
                     dismiss()
-                }
-                override fun OnAddClick(data: SelectList, position: Int) {
                 }
             }
 
             friendlist.adapter = selectAdapter
+
+            header = arguments?.getString("title").toString()
+            Log.e("HEADER",header.toString())
+
+            var list : ArrayList<UserResponseDto> = arrayListOf()
+            if(header == "스티커 고르기"){
+                stickermodel?.getStickerList(object: BooleanListCallback{
+                    override fun booleanlistCallback(flag: Boolean, data: ArrayList<Boolean>?) {
+                        if(flag && data!!.isNotEmpty()){
+                            emptyResult.visibility = View.GONE
+                            friendlist.visibility = View.VISIBLE
+
+                            stickermodel.setSticker(data)
+                            for(i in data.indices){
+                                if(data[i]){
+                                    val select = UserResponseDto(
+                                        uid = 0,
+                                        name = resources.getStringArray(R.array.sticker)[i].toString(),
+                                        profile = i.toString()
+                                    )
+                                    list.add(select)
+                                }
+                            }
+                            selectAdapter.setData(list, true)
+                        }
+                    }
+
+                })
+            } else if(header == "친구 목록"){
+                model?.findMyFriend(object: UserCallback{
+                    override fun userCallback(flag: Boolean, data: ArrayList<UserResponseDto>?) {
+                        if(flag && data!!.isNotEmpty()){
+                            emptyResult.visibility = View.GONE
+                            friendlist.visibility = View.VISIBLE
+
+                            model.setFriend(data)
+                            selectAdapter.setData(data, false)
+                        }else{
+                            emptyResult.visibility = View.VISIBLE
+                            friendlist.visibility = View.GONE
+                        }
+                    }
+                })
+            }
+            title.text = header
             closeBtn.setOnClickListener { dismiss() }
         }
     }
@@ -100,100 +137,5 @@ class FriendListDialog: DialogFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    private fun setStickerList(): ArrayList<SelectList> {
-        return arrayListOf(
-            SelectList(
-                sticker = R.drawable.sticker01,
-                name = "라우디",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker02,
-                name = "장미콩",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker03,
-                name = "단무지",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker04,
-                name = "빈",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker05,
-                name = "고구마",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker06,
-                name = "사랑니",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker01,
-                name = "라우디",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker02,
-                name = "장미콩",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker03,
-                name = "단무지",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker04,
-                name = "빈",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker05,
-                name = "고구마",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.sticker06,
-                name = "사랑니",
-                isAdded = true
-            )
-        )
-    }
-
-    private fun setFriendList(): ArrayList<SelectList> {
-        return arrayListOf(
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "어깨피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "허리피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "맛있는피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "파인애플피자",
-                isAdded = true
-            ),
-            SelectList(
-                sticker = R.drawable.small_sample,
-                name = "민트초코쿠키",
-                isAdded = true
-            )
-        )
     }
 }

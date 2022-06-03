@@ -11,4 +11,4 @@ data class ComplimentResponseDto (
     val stickerNum: Int,
     val message: String,
     val date: Date,
-): Serializable
+)

@@ -34,7 +34,7 @@
             android:layout_height="25dp"
             android:text="사랑니"
             android:gravity="center"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/black"
             android:layout_marginVertical="5dp"
             app:layout_constraintStart_toStartOf="parent"

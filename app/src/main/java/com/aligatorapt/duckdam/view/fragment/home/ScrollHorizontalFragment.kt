@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.aligatorapt.duckdam.databinding.FragmentScrollHorizontalBinding
 import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
+import com.aligatorapt.duckdam.dto.user.UserResponseDto
 import com.aligatorapt.duckdam.retrofit.callback.ComplimentsCallback
+import com.aligatorapt.duckdam.retrofit.callback.UserCallback
 import com.aligatorapt.duckdam.view.activity.NavigationActivity
 import com.aligatorapt.duckdam.view.activity.VendingActivity
 import com.aligatorapt.duckdam.view.adapter.HomeStickerAdapter
 import com.aligatorapt.duckdam.view.fragment.compliment.ComplimentDetailFragment
 import com.aligatorapt.duckdam.viewModel.ComplimentSingleton
+import com.aligatorapt.duckdam.viewModel.FriendSingleton
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,6 +31,7 @@ class ScrollHorizontalFragment : Fragment() {
     private lateinit var complimentAdapter: HomeStickerAdapter
 
     private val model = ComplimentSingleton.getInstance()
+    private val friendmodel = FriendSingleton.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,6 +100,17 @@ class ScrollHorizontalFragment : Fragment() {
                                 showCompliment.visibility = View.GONE
                                 emptyResult.visibility = View.VISIBLE
                             }
+                        }
+                    }
+                }
+            })
+
+            //친구 목록 가져오기
+            friendmodel?.findMyFriend(object: UserCallback {
+                override fun userCallback(flag: Boolean, data: ArrayList<UserResponseDto>?) {
+                    if(flag){
+                        if(data!!.isNotEmpty()){
+                            friendmodel.setFriend(data)
                         }
                     }
                 }
