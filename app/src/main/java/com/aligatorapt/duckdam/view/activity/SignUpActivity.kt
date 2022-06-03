@@ -51,6 +51,7 @@ class SignUpActivity: AppCompatActivity() {
                     override fun apiCallback(flag: Boolean) {
                         if(flag){
                             model.setEmail(signupEmail.text.toString())
+                            Toast.makeText(this@SignUpActivity, "인증코드가 전송되었습니다.", Toast.LENGTH_LONG).show()
                         }
                     }
                 })
@@ -154,6 +155,7 @@ class SignUpActivity: AppCompatActivity() {
                                     val intent = Intent(this@SignUpActivity,LoginActivity::class.java)
                                     finish()
                                     startActivity(intent)
+                                    Toast.makeText(this@SignUpActivity, "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show()
                                 }else if(!flag && isNickname){
                                     signupNicknameError.visibility = View.VISIBLE
                                     arr[4] = false

@@ -64,8 +64,6 @@ class DrawResultFragment : Fragment() {
 
             myStickerBtn.setOnClickListener {
                 val intent = Intent(mActivity, NavigationActivity::class.java)
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                intent.putExtra("position", R.id.tab_sticker)
                 startActivity(intent)
             }
         }
