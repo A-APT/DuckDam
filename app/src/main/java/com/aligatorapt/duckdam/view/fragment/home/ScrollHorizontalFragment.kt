@@ -14,6 +14,7 @@ import com.aligatorapt.duckdam.dto.compliment.ComplimentResponseDto
 import com.aligatorapt.duckdam.dto.user.UserResponseDto
 import com.aligatorapt.duckdam.retrofit.callback.ComplimentsCallback
 import com.aligatorapt.duckdam.retrofit.callback.UserCallback
+import com.aligatorapt.duckdam.view.activity.DataActivity
 import com.aligatorapt.duckdam.view.activity.NavigationActivity
 import com.aligatorapt.duckdam.view.activity.VendingActivity
 import com.aligatorapt.duckdam.view.adapter.HomeStickerAdapter
@@ -49,6 +50,12 @@ class ScrollHorizontalFragment : Fragment() {
     private fun init() {
         val mActivity = activity as NavigationActivity
         binding.apply {
+            //어제의 궁금증 페이지 이동
+            dataBtn.setOnClickListener {
+                val intent = Intent(mActivity, DataActivity::class.java)
+                startActivity(intent)
+            }
+
             //뷰페이저 어뎁터
             complimentAdapter = HomeStickerAdapter(arrayListOf(), requireActivity())
             complimentAdapter.itemClickListener = object : HomeStickerAdapter.OnItemClickListener {
