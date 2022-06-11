@@ -50,12 +50,6 @@ class ScrollHorizontalFragment : Fragment() {
     private fun init() {
         val mActivity = activity as NavigationActivity
         binding.apply {
-            //어제의 궁금증 페이지 이동
-            dataBtn.setOnClickListener {
-                val intent = Intent(mActivity, DataActivity::class.java)
-                startActivity(intent)
-            }
-
             //뷰페이저 어뎁터
             complimentAdapter = HomeStickerAdapter(arrayListOf(), requireActivity())
             complimentAdapter.itemClickListener = object : HomeStickerAdapter.OnItemClickListener {
@@ -158,6 +152,11 @@ class ScrollHorizontalFragment : Fragment() {
             }
             allCompliment.setOnClickListener {
                 mActivity.changeFragment(ScrollVerticalFragment())
+            }
+            //어제의 궁금증 페이지 이동
+            statistic.setOnClickListener {
+                val intent = Intent(mActivity, DataActivity::class.java)
+                startActivity(intent)
             }
         }
     }

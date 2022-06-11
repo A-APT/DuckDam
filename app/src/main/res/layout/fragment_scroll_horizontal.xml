@@ -16,7 +16,7 @@
         android:paddingVertical="26dp">
 
         <TextView
-            android:id="@+id/dataBtn"
+            android:id="@+id/mainlogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/dohyeon"
@@ -29,30 +29,27 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <TextView
+        <ImageView
             android:id="@+id/randomCompliment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="39dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/sub1_solid_box_10dp"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="9dp"
-            android:text="오늘의 자판기"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:src="@drawable/vending_icon" />
 
-        <TextView
+        <ImageView
+            android:id="@+id/statistic"
+            android:layout_width="39dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/statistic_icon" />
+
+        <ImageView
             android:id="@+id/allCompliment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/sub1_solid_box_10dp"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="9dp"
-            android:text="전체 보기"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_width="39dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/list_icon" />
+
     </LinearLayout>
 
     <ScrollView
