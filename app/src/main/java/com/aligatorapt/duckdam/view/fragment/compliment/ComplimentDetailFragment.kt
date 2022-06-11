@@ -10,8 +10,10 @@ import com.aligatorapt.duckdam.view.activity.NavigationActivity
 import android.text.method.ScrollingMovementMethod
 import androidx.lifecycle.Observer
 import com.aligatorapt.duckdam.databinding.FragmentComplimentDetailBinding
+import com.aligatorapt.duckdam.dto.user.UserResponseDto
 import com.aligatorapt.duckdam.view.fragment.home.ScrollVerticalFragment
 import com.aligatorapt.duckdam.viewModel.ComplimentSingleton
+import com.aligatorapt.duckdam.viewModel.FriendSingleton
 import java.text.SimpleDateFormat
 
 class ComplimentDetailFragment : Fragment() {
@@ -19,6 +21,7 @@ class ComplimentDetailFragment : Fragment() {
     private val binding: FragmentComplimentDetailBinding get() = _binding!!
 
     private val model = ComplimentSingleton.getInstance()
+    private val friendModel = FriendSingleton.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +43,7 @@ class ComplimentDetailFragment : Fragment() {
             mActivity.showTabView(false)
 
             //데이터 설정
-            model?.detailCompliment?.observe(viewLifecycleOwner, Observer {
+            model?.detailCompliment?.observe(viewLifecycleOwner, Observer { it ->
                 if (it != null) {
                     val dateFormat = SimpleDateFormat("yyyy.MM.dd")
                     sticker.setImageResource(
@@ -55,6 +58,16 @@ class ComplimentDetailFragment : Fragment() {
                         complimentBtn.visibility = View.GONE
                         addFriendBtn.visibility = View.GONE
                     }
+                    friendModel?.friends?.observe(viewLifecycleOwner, Observer { friends ->
+                        if (friends != null) {
+                            for (friend in friends){
+                                if(friend.name == it.fromName){
+                                    addFriendBtn.visibility = View.GONE
+                                    break
+                                }
+                            }
+                        }
+                    })
                     complimentBtn.text = "${it.fromName}에게 칭찬하러 가기"
                     addFriendBtn.text = "${it.fromName} 친구 추가하기"
                 }
